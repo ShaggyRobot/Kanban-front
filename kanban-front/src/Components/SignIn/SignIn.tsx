@@ -17,7 +17,7 @@ function SignIn() {
     register,
     handleSubmit,
     reset,
-    formState: { isDirty, errors },
+    formState: { errors },
   } = useForm<IFormValues>({ mode: 'onSubmit' });
 
   const submitHandler = async (values: IFormValues) => {
