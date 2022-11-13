@@ -1,0 +1,9 @@
+{
+  "header": {
+    "buttons": {
+      "signin": "sign in",
+      "signup": "sign up"
+    }
+  },
+  "test": "Something"
+}
