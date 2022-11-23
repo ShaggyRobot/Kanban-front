@@ -1,0 +1,15 @@
+.task{
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  gap: .25rem;
+  padding: .25rem;
+
+  &__title {
+    font-size: 1.2rem;
+  }
+
+  &__description{
+    
+  }
+}

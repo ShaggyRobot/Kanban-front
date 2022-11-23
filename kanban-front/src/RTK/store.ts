@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { authApi } from './API/authApi';
-import { boardsApi } from './API/boardsApi';
-import { columnsApi } from './API/columnsApi';
-import { usersApi } from './API/usersApi';
+import { authApi } from './Api/authApi';
+import { boardsApi } from './Api/boardsApi';
+import { columnsApi } from './Api/columnsApi';
+import { usersApi } from './Api/usersApi';
 
 const store = configureStore({
   reducer: {
@@ -15,9 +15,9 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .concat(authApi.middleware)
-      .concat(boardsApi.middleware)
       .concat(columnsApi.middleware)
-      .concat(usersApi.middleware),
+      .concat(usersApi.middleware)
+      .concat(boardsApi.middleware),
 });
 
 export { store };

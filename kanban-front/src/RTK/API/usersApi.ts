@@ -27,8 +27,7 @@ const usersApi = createApi({
     }),
 
     editUser: builder.mutation<ISignUpResponse, { id: string; body: ISignUpBody }>({
-      query: (arg) => {
-        const { id, body } = arg;
+      query: ({ id, body }) => {
         return { url: `/${id}`, method: 'POST', body };
       },
       invalidatesTags: ['users'],

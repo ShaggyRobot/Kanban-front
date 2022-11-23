@@ -14,31 +14,15 @@ const columnsApi = createApi({
     },
   }),
 
-  tagTypes: ['columns'],
-  endpoints: (builder) => ({
-    getColumn: builder.query<IColumn, string[]>({
-      query: (args) => {
-        const [boardId, columnId] = args;
-        return {
-          url: `/${boardId}/columns/${columnId}`,
-          method: 'GET',
-        };
-      },
-    }),
-    createColumn: builder.mutation<IColumn, { boardId: string; title: string }>({
-      query: (arg) => {
-        const { boardId, title } = arg;
-        return {
-          url: `/${boardId}/columns`,
-          method: 'POST',
-          body: {
-            title,
-          },
-        };
-      },
-    }),
-  }),
+  tagTypes: ['columns', 'boards', 'board'],
+
+  endpoints: (builder) => ({}),
 });
 
 export { columnsApi };
-export const { useGetColumnQuery, useCreateColumnMutation } = columnsApi;
+export const {
+  // useGetColumnQuery,
+  // useGetColumnsQuery,
+  // useCreateColumnMutation,
+  // useDeleteColumnMutation,
+} = columnsApi;

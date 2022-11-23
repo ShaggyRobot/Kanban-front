@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-import { useSignInMutation } from '../../../RTK';
+import { useGetUsersQuery, useSignInMutation } from '../../../Rtk';
 
 import { Button, Divider, Link, Paper, TextField } from '@mui/material';
 
@@ -21,6 +21,7 @@ function SignIn() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [handleSignIn] = useSignInMutation();
+  const { data: users } = useGetUsersQuery();
 
   const {
     register,
@@ -35,6 +36,8 @@ function SignIn() {
       const signInResponse = await handleSignIn(signInBody).unwrap();
       localStorage.setItem('token', signInResponse.token);
       localStorage.setItem('login', values.login);
+      const user = users?.find((user) => user.login === values.login);
+      user && localStorage.setItem('userId', user?.id);
       navigate('/boards');
     } catch (error) {
       console.log((error as { data: { message: string } }).data.message);

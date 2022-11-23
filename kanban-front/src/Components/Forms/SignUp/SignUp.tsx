@@ -7,11 +7,12 @@ import { Divider, Link, Paper } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-import { useSignInMutation, useSignUpMutation } from '../../../RTK';
+import { useGetUsersQuery, useSignInMutation, useSignUpMutation } from '../../../Rtk';
 import { useTranslation } from 'react-i18next';
 
 import { NavLink } from 'react-router-dom';
 import styles from '../form.module.scss';
+import jwtDecode from 'jwt-decode';
 
 interface IFormValues {
   name: string;
@@ -41,6 +42,8 @@ function SignUp() {
       const signInResponse = await handleSignIn(signInBody).unwrap();
       localStorage.setItem('login', signUpResponse.login);
       localStorage.setItem('token', signInResponse.token);
+      const { userId } = jwtDecode(signInResponse.token) as { userId: string };
+      localStorage.setItem('userId', userId);
       navigate('/boards');
     } catch (error) {
       console.log(error);

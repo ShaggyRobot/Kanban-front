@@ -24,6 +24,10 @@ interface ICreateBoardBody {
   description: string;
 }
 
+interface ICreateTaskBody extends ICreateBoardBody {
+  userId: string;
+}
+
 interface IBoardFaceDTO {
   id: string;
   title: string;
@@ -36,12 +40,21 @@ interface IFile {
 }
 
 interface ITask {
-  id: string;
   title: string;
   order: number;
   description: string;
-  iserId: string;
+  userId: string;
+  id: string;
   files: Array<IFile>;
+}
+
+interface ITaskUpdate {
+  title: string;
+  order: number;
+  description: string;
+  userId: string;
+  boardId: string;
+  columnId: string;
 }
 
 interface IColumn {
@@ -60,13 +73,15 @@ interface IBoardDTO extends IBoardFaceDTO {
 
 export type {
   ISignInBody,
-  ISignInResponse,
   ISignUpBody,
+  ISignInResponse,
   ISignUpResponse,
   ICreateBoardBody,
   IBoardFaceDTO,
   IFile,
   ITask,
+  ITaskUpdate,
   IColumn,
   IBoardDTO,
+  ICreateTaskBody,
 };

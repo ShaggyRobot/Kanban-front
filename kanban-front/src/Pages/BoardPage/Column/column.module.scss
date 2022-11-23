@@ -1,13 +1,20 @@
-.card{
+.column {
   position: relative;
-  min-width: 210px;
-  min-height: 100px;
-  width: fit-content;
-  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  min-height: 60px;
+  min-width: 240px;
+  padding: .5rem;
 
-  &__title{
+  &__title {
+    width: 100%;
     font-size: 1.2rem;
-    font-weight: bold;
+    text-align: center;
+    border: 1px solid rgb(128 128 128 / 43.8%);
+    border-radius: .25rem;
+    padding: .25rem;
+    margin-bottom: 1rem;
   }
 
   @keyframes shake {
@@ -45,4 +52,19 @@
       animation-name: shake;
     }
   }
+}
+
+.tasks {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.task{
+  margin: 0 0 1rem;
+}
+
+.create{
+  width: 100%;
+  text-align: center;
 }

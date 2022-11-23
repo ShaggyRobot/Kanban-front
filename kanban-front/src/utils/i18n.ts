@@ -8,6 +8,7 @@ i18n
   .use(initReactI18next)
   .use(LanguageDetector)
   .init({
+    lng: localStorage.getItem('') ?? 'ru',
     fallbackLng: 'en',
     debug: true,
     detection: {

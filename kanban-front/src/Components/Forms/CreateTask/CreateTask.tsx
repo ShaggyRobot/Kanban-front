@@ -1,24 +1,28 @@
-import { Button, TextField } from '@mui/material';
-import Paper from '@mui/material/Paper';
+import { Button, Paper, TextField } from '@mui/material';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useCreateColumnMutation } from '../../../Rtk/Api/boardsApi';
+import { useCreateTaskMutation, useGetUsersQuery } from '../../../Rtk';
 
 import styles from '../form.module.scss';
 
 interface IFormValues {
   title: string;
+  description: string;
 }
 
-const CreateColumn = React.forwardRef(function (
+const CreateTask = React.forwardRef(function (
   props: {
     boardId: string;
+    columnId: string;
     modalClose: () => void;
   },
   ref
 ): JSX.Element {
-  const { boardId, modalClose } = props;
-  const [createColumn] = useCreateColumnMutation();
+  const userId = localStorage.getItem('userId');
+  const { boardId, columnId, modalClose } = props;
+  const [createTask] = useCreateTaskMutation();
+  const { data: users } = useGetUsersQuery();
+
   const {
     register,
     handleSubmit,
@@ -27,9 +31,11 @@ const CreateColumn = React.forwardRef(function (
   } = useForm<IFormValues>({ mode: 'onSubmit' });
 
   const submitHandler = async (values: IFormValues) => {
-    await createColumn({ boardId, title: values.title });
-    modalClose();
-    reset();
+    if (userId) {
+      await createTask({ boardId, columnId, body: { ...values, userId } });
+      modalClose();
+      reset();
+    }
   };
 
   return (
@@ -41,6 +47,14 @@ const CreateColumn = React.forwardRef(function (
           label="Title"
           {...register('title', { required: 'true' })}
         />
+
+        <TextField
+          size="small"
+          type="text"
+          label="Description"
+          {...register('description', { required: 'true' })}
+        />
+
         <Button
           variant="contained"
           size="small"
@@ -53,4 +67,4 @@ const CreateColumn = React.forwardRef(function (
     </Paper>
   );
 });
-export { CreateColumn };
+export { CreateTask };

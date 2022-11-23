@@ -1,7 +1,7 @@
 import { Button, Menu, MenuItem } from '@mui/material';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDeleteUserMutation, useGetUsersQuery } from '../../../RTK/API/usersApi';
+import { useDeleteUserMutation, useGetUsersQuery } from '../../../Rtk/Api/usersApi';
 
 function UserDashboard(): JSX.Element {
   const navigate = useNavigate();
@@ -19,15 +19,13 @@ function UserDashboard(): JSX.Element {
   };
 
   const handleLogOut = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('login');
+    const entries = ['token', 'login', 'userId'];
+    entries.forEach((entry) => localStorage.removeItem(entry));
     navigate('/');
   };
 
   const handleDelete = async () => {
     const user = users?.find((user) => user.login === login);
-    console.log(users);
-    console.log(user);
     user && deleteUser(user.id);
     handleLogOut();
   };
