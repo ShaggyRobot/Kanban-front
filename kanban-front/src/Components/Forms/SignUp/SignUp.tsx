@@ -7,7 +7,7 @@ import { Divider, Link, Paper } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-import { useGetUsersQuery, useSignInMutation, useSignUpMutation } from '../../../Rtk';
+import { useSignInMutation, useSignUpMutation } from '../../../Rtk';
 import { useTranslation } from 'react-i18next';
 
 import { NavLink } from 'react-router-dom';

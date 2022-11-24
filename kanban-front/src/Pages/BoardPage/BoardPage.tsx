@@ -8,7 +8,7 @@ import { useGetBoardQuery, useUpdateTaskMutation } from '../../Rtk/Api/boardsApi
 import { Column } from './Column/Column';
 
 import styles from './board.module.scss';
-import { DragDropContext, DragStart, DropResult } from 'react-beautiful-dnd';
+import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { IColumn, ITaskUpdate } from '../../Rtk/Api/types';
 
 function BoardPage(): JSX.Element {

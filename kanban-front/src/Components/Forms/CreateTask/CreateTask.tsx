@@ -1,7 +1,7 @@
 import { Button, Paper, TextField } from '@mui/material';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useCreateTaskMutation, useGetUsersQuery } from '../../../Rtk';
+import { useCreateTaskMutation } from '../../../Rtk';
 
 import styles from '../form.module.scss';
 
@@ -21,7 +21,6 @@ const CreateTask = React.forwardRef(function (
   const userId = localStorage.getItem('userId');
   const { boardId, columnId, modalClose } = props;
   const [createTask] = useCreateTaskMutation();
-  const { data: users } = useGetUsersQuery();
 
   const {
     register,

@@ -1,19 +1,11 @@
 import React from 'react';
 import { IBoardFaceDTO } from '../../../Rtk/Api/types';
-import { Link, Paper } from '@mui/material';
-import { keyframes } from '@emotion/react';
+import { Paper } from '@mui/material';
 import DeleteForever from '@mui/icons-material/DeleteForever';
 import { useDeleteBoardMutation } from '../../../Rtk/Api/boardsApi';
 
 import styles from './board-card.module.scss';
 import { useNavigate } from 'react-router-dom';
-
-const ani = keyframes`0% {
-  transform: scale(0)
-}
-100%{
-  transform: scale(1.5)
-} `;
 
 function BoardCard(props: { board: IBoardFaceDTO }): JSX.Element {
   const { board } = props;
@@ -29,7 +21,7 @@ function BoardCard(props: { board: IBoardFaceDTO }): JSX.Element {
     <Paper
       className={styles.card}
       elevation={3}
-      onClick={(e) => {
+      onClick={() => {
         navigate(`/boards/${board.id}`);
       }}
     >
