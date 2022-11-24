@@ -22,6 +22,7 @@ const CreateBoard = React.forwardRef(function (
   const { modalClose } = props;
   const { t } = useTranslation();
   const [createBoard] = useCreateBoardMutation();
+  console.log(ref);
 
   const {
     register,
@@ -59,4 +60,5 @@ const CreateBoard = React.forwardRef(function (
     </Paper>
   );
 });
+
 export { CreateBoard };
