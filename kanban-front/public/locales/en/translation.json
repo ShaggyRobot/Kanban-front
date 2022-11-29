@@ -5,5 +5,19 @@
       "signup": "sign up"
     }
   },
-  "test": "Something"
+  "form": {
+    "login": "Login",
+    "password": "Password",
+    "name": "Name",
+    "submit": "Submit",
+    "or": "Or",
+    "register": "Register",
+    "log": "Log in"
+  },
+  "boards": {
+    "boards": "Boards",
+    "title": "Title",
+    "description": "Description",
+    "create": "Create"
+  }
 }

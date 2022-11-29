@@ -1,12 +1,10 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import BoardsPage from '../../Pages/BoardsPage/BoardsPage';
-import HomePage from '../../Pages/HomePage/HomePage';
-import { SignIn } from '../SignIn/SignIn';
-import { SignUp } from '../SignUp/SignUp';
-import './App.scss';
-import Layout from './Layout';
+
 import { ProtectedRoute } from './ProtectedRoute';
+import { BoardPage, BoardsPage, HomePage, SignUpPage, SignInPage } from '../../Pages';
+import Layout from './Layout';
+import './App.scss';
 
 function App() {
   return (
@@ -14,9 +12,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/signin" element={<SignInPage />} />
           <Route path="/boards" element={<ProtectedRoute outlet={<BoardsPage />} />} />
+          <Route path="/boards/:id" element={<ProtectedRoute outlet={<BoardPage />} />} />
         </Route>
       </Routes>
     </div>

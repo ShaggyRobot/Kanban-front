@@ -5,3 +5,19 @@
 body {
   margin: 0;
 }
+
+.page {
+  display: flex;
+  overflow: auto;
+  padding: 1rem;
+  flex-flow: column wrap;
+  align-content: center;
+  width: 100%;
+  flex-grow: 1;
+}
+
+.modal{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

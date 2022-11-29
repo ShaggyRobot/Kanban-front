@@ -7,6 +7,9 @@ import { ISignInResponse, ISignInBody, ISignUpBody, ISignUpResponse } from './ty
 const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({ baseUrl: endpoints.baseUrl }),
+
+  tagTypes: ['users'],
+
   endpoints: (builder) => ({
     signUp: builder.mutation<ISignUpResponse, ISignUpBody>({
       query: (body) => ({
@@ -14,6 +17,7 @@ const authApi = createApi({
         method: 'POST',
         body,
       }),
+      invalidatesTags: ['users'],
     }),
 
     signIn: builder.mutation<ISignInResponse, ISignInBody>({
@@ -22,6 +26,7 @@ const authApi = createApi({
         method: 'POST',
         body,
       }),
+      invalidatesTags: ['users'],
     }),
   }),
 });

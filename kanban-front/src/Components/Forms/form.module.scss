@@ -1,0 +1,21 @@
+.form_container {
+  display: flex;
+  width: fit-content;
+  margin: auto;
+  padding: 2rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  &__txt_area{
+    resize: none;
+    border: 1px solid lightgray;
+    border-radius: 3px;
+    padding: .5rem;
+  }
+}
