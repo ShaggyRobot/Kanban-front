@@ -1,8 +1,8 @@
 .card{
-  position: relative;
-  min-width: 210px;
-  min-height: 100px;
-  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  max-width: calc(100vw - 2rem);
   padding: 1rem;
 
   &__title{
@@ -10,39 +10,10 @@
     font-weight: bold;
   }
 
-  @keyframes shake {
-    0% {
-      transform: translateX(0%);
-    }
-
-    25% {
-      transform: translateX(10%);
-      transform: rotate(20deg);
-    }
-
-    50% {
-      transform: translateX(-10%);
-      transform: rotate(-20deg);
-    }
-
-    75% {
-      transform: translateX(10%);
-    }
-
-    100% {
-      transform: translateX(0%);
-    }
-  }
-
-  &__delete {
-    position: absolute;
-    right: .5rem;
-    bottom: .5rem;
-    cursor: pointer;
-
-    &:hover{
-      animation-duration: .3s;
-      animation-name: shake;
-    }
+  &__description {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 }

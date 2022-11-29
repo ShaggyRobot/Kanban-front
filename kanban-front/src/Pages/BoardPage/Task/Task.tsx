@@ -1,3 +1,4 @@
+import { Divider, Paper } from '@mui/material';
 import React from 'react';
 import { ITask } from '../../../Rtk/Api/types';
 
@@ -7,11 +8,11 @@ function Task(props: { task: ITask }): JSX.Element {
   const { task } = props;
 
   return (
-    <div className={styles.task}>
+    <Paper className={styles.task}>
       <div className={styles.task__title}>{task.title}</div>
+      <Divider></Divider>
       <div className={styles.task__description}>{task.description}</div>
-      {/* <div className={styles.task__description}>{task.order}</div> */}
-    </div>
+    </Paper>
   );
 }
 export { Task };

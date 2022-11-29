@@ -64,6 +64,8 @@ interface IColumn {
   tasks: Array<ITask>;
 }
 
+type IColumnUpdate = Omit<IColumn, 'tasks'>;
+
 interface IBoardDTO extends IBoardFaceDTO {
   id: string;
   title: string;
@@ -82,6 +84,7 @@ export type {
   ITask,
   ITaskUpdate,
   IColumn,
+  IColumnUpdate,
   IBoardDTO,
   ICreateTaskBody,
 };

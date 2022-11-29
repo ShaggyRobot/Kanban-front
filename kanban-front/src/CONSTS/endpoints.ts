@@ -1,8 +1,8 @@
 export enum endpoints {
-  baseUrl = 'https://infinite-springs-48189.herokuapp.com',
-  users = 'https://infinite-springs-48189.herokuapp.com/users',
-  signup = 'https://infinite-springs-48189.herokuapp.com/signup',
-  signin = 'https://infinite-springs-48189.herokuapp.com/signin',
-  boards = 'https://infinite-springs-48189.herokuapp.com/boards',
-  file = 'https://infinite-springs-48189.herokuapp.com/file',
+  baseUrl = 'https://kanban-rest-x8p1.onrender.com',
+  users = 'https://kanban-rest-x8p1.onrender.com/users',
+  signup = 'https://kanban-rest-x8p1.onrender.com/signup',
+  signin = 'https://kanban-rest-x8p1.onrender.com/signin',
+  boards = 'https://kanban-rest-x8p1.onrender.com/boards',
+  file = 'https://kanban-rest-x8p1.onrender.com/file',
 }

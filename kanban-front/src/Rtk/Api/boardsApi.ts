@@ -7,6 +7,7 @@ import {
   IColumn,
   ICreateTaskBody,
   ITaskUpdate,
+  IColumnUpdate,
 } from './types';
 
 const boardsApi = createApi({
@@ -43,6 +44,18 @@ const boardsApi = createApi({
       invalidatesTags: ['boards'],
     }),
 
+    updateBoard: builder.mutation<IBoardFaceDTO, { boardId: string; body: ICreateBoardBody }>({
+      query: (arg) => {
+        const { boardId, body } = arg;
+        return {
+          url: `/${boardId}`,
+          method: 'PUT',
+          body,
+        };
+      },
+      invalidatesTags: ['boards'],
+    }),
+
     deleteBoard: builder.mutation<void, string>({
       query: (id: string) => ({
         url: `/${id}`,
@@ -68,6 +81,21 @@ const boardsApi = createApi({
           body: {
             title,
           },
+        };
+      },
+      invalidatesTags: ['board'],
+    }),
+
+    updateColumn: builder.mutation<
+      IColumnUpdate,
+      { boardId: string; columnId: string; body: { title: string; order: number } }
+    >({
+      query: (args) => {
+        const { boardId, columnId, body } = args;
+        return {
+          url: `/${boardId}/columns/${columnId}`,
+          method: 'PUT',
+          body,
         };
       },
       invalidatesTags: ['board'],
@@ -108,7 +136,10 @@ const boardsApi = createApi({
           body,
         };
       },
-      invalidatesTags: ['board'],
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        await queryFulfilled;
+        dispatch(boardsApi.util.invalidateTags(['board']));
+      },
     }),
   }),
 });
@@ -116,12 +147,14 @@ const boardsApi = createApi({
 export { boardsApi };
 
 export const {
-  useCreateBoardMutation,
   useGetBoardsQuery,
-  useDeleteBoardMutation,
   useGetBoardQuery,
+  useCreateBoardMutation,
+  useUpdateBoardMutation,
+  useDeleteBoardMutation,
   useDeleteColumnMutation,
   useCreateColumnMutation,
+  useUpdateColumnMutation,
   useCreateTaskMutation,
   useUpdateTaskMutation,
 } = boardsApi;

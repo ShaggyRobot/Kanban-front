@@ -18,6 +18,7 @@
   align-items: center;
   justify-content: center;
   border-radius: .3rem;
-  width: 210px;
+  width: 400px;
+  max-width: calc(100vw - 2rem);
   height: 100px;
 }

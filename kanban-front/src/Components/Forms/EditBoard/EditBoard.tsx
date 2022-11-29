@@ -6,7 +6,7 @@ import TextField from '@mui/material/TextField';
 
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useCreateBoardMutation } from '../../../Rtk';
+import { IBoardFaceDTO, useUpdateBoardMutation } from '../../../Rtk';
 
 import styles from '../form.module.scss';
 
@@ -15,13 +15,10 @@ interface IFormValues {
   description: string;
 }
 
-const CreateBoard = React.forwardRef(function (
-  props: { modalClose: () => void },
-  ref
-): JSX.Element {
-  const { modalClose } = props;
+function EditBoard(props: { board: IBoardFaceDTO; closeModal: () => void }): JSX.Element {
+  const { board, closeModal } = props;
   const { t } = useTranslation();
-  const [createBoard] = useCreateBoardMutation();
+  const [updateBoard] = useUpdateBoardMutation();
 
   const {
     register,
@@ -30,19 +27,19 @@ const CreateBoard = React.forwardRef(function (
     formState: { errors },
   } = useForm<IFormValues>({ mode: 'onSubmit' });
 
-  const boardCreate = async (values: IFormValues) => {
-    await createBoard(values).unwrap();
-    modalClose();
+  const updateBoardHandler = async (values: IFormValues) => {
+    updateBoard({ boardId: board.id, body: values });
     reset();
+    closeModal();
   };
 
   return (
     <Paper elevation={2} className={styles.form_container}>
-      <form id="boardCreate" className={styles.form} onSubmit={handleSubmit(boardCreate)}>
+      <form id="updateBoard" className={styles.form} onSubmit={handleSubmit(updateBoardHandler)}>
         <TextField
           size="small"
-          label={t('boards.title')}
           error={!!errors.title}
+          defaultValue={board.title}
           {...register('title', { required: 'true' })}
         ></TextField>
 
@@ -50,6 +47,7 @@ const CreateBoard = React.forwardRef(function (
           rows={8}
           className={styles.form__txt_area}
           placeholder={`${t('boards.description')}`}
+          defaultValue={board.description}
           {...register('description', { required: 'true' })}
         ></textarea>
         <Button variant="outlined" size="small" type="submit">
@@ -58,6 +56,6 @@ const CreateBoard = React.forwardRef(function (
       </form>
     </Paper>
   );
-});
+}
 
-export { CreateBoard };
+export { EditBoard };

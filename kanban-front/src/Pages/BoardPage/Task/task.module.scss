@@ -1,15 +1,16 @@
 .task{
   display: flex;
   flex-direction: column;
-  border: 1px solid black;
+  border: 1px solid rgb(0 0 0 / 19.2%);
   gap: .25rem;
   padding: .25rem;
 
   &__title {
     font-size: 1.2rem;
+    text-align: center;
   }
 
   &__description{
-    
+    overflow-wrap: break-word;
   }
 }
