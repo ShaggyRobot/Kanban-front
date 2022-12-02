@@ -8,4 +8,5 @@ function EditProfilePage(): JSX.Element {
     </div>
   );
 }
+
 export { EditProfilePage };
