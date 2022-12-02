@@ -4,10 +4,10 @@ import React from 'react';
 
 function ModalComponent(props: {
   open: boolean;
-  Elem: JSX.Element;
+  children: JSX.Element;
   setOpen: (open: boolean) => void;
 }): JSX.Element {
-  const { open, Elem, setOpen } = props;
+  const { open, setOpen, children } = props;
   const handleClose = (evt: React.MouseEvent) => {
     evt.stopPropagation();
     (evt.target as HTMLElement).classList.contains('close') && setOpen(false);
@@ -62,13 +62,9 @@ function ModalComponent(props: {
     animation: ${contentKf} 0.3s cubic-bezier(0.53, 0.76, 0.46, 1.32);
   `;
 
-  const RefElem = React.forwardRef(() => Elem);
-
   return (
     <Overlay onClick={(e) => handleClose(e)} className="close">
-      <Content className="content">
-        <RefElem />
-      </Content>
+      <Content className="content">{children}</Content>
     </Overlay>
   );
 }

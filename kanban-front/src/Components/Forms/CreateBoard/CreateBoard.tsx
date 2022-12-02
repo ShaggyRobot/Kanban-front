@@ -15,10 +15,7 @@ interface IFormValues {
   description: string;
 }
 
-const CreateBoard = React.forwardRef(function (
-  props: { modalClose: () => void },
-  ref
-): JSX.Element {
+function CreateBoard(props: { modalClose: () => void }): JSX.Element {
   const { modalClose } = props;
   const { t } = useTranslation();
   const [createBoard] = useCreateBoardMutation();
@@ -37,27 +34,31 @@ const CreateBoard = React.forwardRef(function (
   };
 
   return (
-    <Paper elevation={2} className={styles.form_container}>
+    <Paper elevation={2} className={styles.form__container}>
+      <h3>{t('boards.createBoard')}</h3>
       <form id="boardCreate" className={styles.form} onSubmit={handleSubmit(boardCreate)}>
         <TextField
+          maxRows={1}
           size="small"
           label={t('boards.title')}
           error={!!errors.title}
           {...register('title', { required: 'true' })}
         ></TextField>
 
-        <textarea
-          rows={8}
+        <TextField
+          multiline
+          maxRows={8}
+          rows={6}
           className={styles.form__txt_area}
-          placeholder={`${t('boards.description')}`}
+          label={`${t('boards.description')}`}
           {...register('description', { required: 'true' })}
-        ></textarea>
+        ></TextField>
         <Button variant="outlined" size="small" type="submit">
           {t('boards.create')}
         </Button>
       </form>
     </Paper>
   );
-});
+}
 
 export { CreateBoard };

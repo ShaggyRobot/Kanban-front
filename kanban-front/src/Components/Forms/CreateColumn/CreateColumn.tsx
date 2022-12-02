@@ -2,6 +2,7 @@ import { Button, TextField } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { useCreateColumnMutation } from '../../../Rtk/Api/boardsApi';
 
 import styles from '../form.module.scss';
@@ -10,14 +11,9 @@ interface IFormValues {
   title: string;
 }
 
-const CreateColumn = React.forwardRef(function (
-  props: {
-    boardId: string;
-    modalClose: () => void;
-  },
-  ref
-): JSX.Element {
+function CreateColumn(props: { boardId: string; modalClose: () => void }): JSX.Element {
   const { boardId, modalClose } = props;
+  const { t } = useTranslation();
   const [createColumn] = useCreateColumnMutation();
   const {
     register,
@@ -33,12 +29,13 @@ const CreateColumn = React.forwardRef(function (
   };
 
   return (
-    <Paper className={styles.form_container}>
+    <Paper className={styles.form__container}>
+      <h3>{t('columns.createColumn')}</h3>
       <form className={styles.form} onSubmit={handleSubmit(submitHandler)}>
         <TextField
           size="small"
           type="text"
-          label="Title"
+          label={t('boards.title')}
           {...register('title', { required: 'true' })}
         />
         <Button
@@ -47,10 +44,10 @@ const CreateColumn = React.forwardRef(function (
           type="submit"
           disabled={!!Object.keys(errors).length}
         >
-          Submit
+          {t('form.submit')}
         </Button>
       </form>
     </Paper>
   );
-});
+}
 export { CreateColumn };

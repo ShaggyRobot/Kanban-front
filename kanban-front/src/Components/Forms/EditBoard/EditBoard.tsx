@@ -34,24 +34,31 @@ function EditBoard(props: { board: IBoardFaceDTO; closeModal: () => void }): JSX
   };
 
   return (
-    <Paper elevation={2} className={styles.form_container}>
+    <Paper elevation={2} className={styles.form__container}>
+      <h3>{t('boards.editBoard')}</h3>
       <form id="updateBoard" className={styles.form} onSubmit={handleSubmit(updateBoardHandler)}>
         <TextField
-          size="small"
-          error={!!errors.title}
+          multiline
+          maxRows={3}
+          label={t('boards.title')}
+          className={styles.form__txt_area}
+          style={{ width: '300px' }}
           defaultValue={board.title}
           {...register('title', { required: 'true' })}
+          error={!!errors.title}
         ></TextField>
-
-        <textarea
-          rows={8}
+        <TextField
+          multiline
+          maxRows={8}
+          label={t('boards.description')}
           className={styles.form__txt_area}
           placeholder={`${t('boards.description')}`}
           defaultValue={board.description}
           {...register('description', { required: 'true' })}
-        ></textarea>
+          error={!!errors.description}
+        ></TextField>
         <Button variant="outlined" size="small" type="submit">
-          {t('boards.create')}
+          {t('form.submit')}
         </Button>
       </form>
     </Paper>

@@ -73,6 +73,14 @@ interface IBoardDTO extends IBoardFaceDTO {
   columns: Array<IColumn>;
 }
 
+interface IServerError {
+  status: number;
+  data: {
+    message: string;
+    statusCode: number;
+  };
+}
+
 export type {
   ISignInBody,
   ISignUpBody,
@@ -87,4 +95,5 @@ export type {
   IColumnUpdate,
   IBoardDTO,
   ICreateTaskBody,
+  IServerError,
 };

@@ -2,22 +2,81 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  height: fit-content;
   min-height: 60px;
   max-height: 100%;
   min-width: fit-content;
   padding: .5rem;
   overflow-x: hidden;
-  margin-right: 1rem;
+
+  &__drag_wrap {
+    display: flex;
+    height: fit-content;
+    max-height: 100%;
+    margin-right: 1rem;
+  }
+
+  &__drag_handle {
+    display: flex;
+    margin-top: -0.5rem;
+    height: 0.8rem;
+    justify-content: center;
+    align-items: center;
+
+    &::before{
+      position: absolute;
+      content: '';
+      border-top: 1.5px solid rgb(0 0 0 / 40%);
+      width: 50%;
+      box-shadow: rgb(0 0 0 / 50%) 2px 2px 4px 0;
+    }
+
+    &::after{
+      content: '';
+      position: absolute;
+      border-top: 1.5px solid rgb(0 0 0 / 40%);;
+      width: 50%;
+      margin-top: .5rem;
+      box-shadow: rgb(0 0 0 / 50%) 2px 2px 4px 0;
+    }
+  }
 
   &__title {
-    min-width: 260px;
+    width: 260px;
     font-size: 1.2rem;
     text-align: center;
-    border: 1px solid rgb(128 128 128 / 43.8%);
-    border-radius: .25rem;
-    padding: .25rem;
+    padding: 0.25rem;
+    margin-top: 0.5rem;
     margin-bottom: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 260;
+    cursor: text;
+  }
+
+  &__edit_wrapper {
+    max-width: 260px;
+    margin-top: 0.5rem;
+    display: flex;
+  }
+
+  &__edit_controls {
+    display: flex;
+  }
+
+  &__edit_input{
+    box-sizing: border-box;
+    max-width: 260px;
+    font-size: 1.2rem;
+    font-family: inherit;
+    margin-bottom: 1rem;
+    padding: .25rem;
+    border: none;
+    resize: none;
+
+    &:focus {
+      outline: none;
+      border: none;
+    }
   }
 
   @keyframes shake {
@@ -44,6 +103,14 @@
     }
   }
 
+  &__controls {
+    display: flex;
+    gap: .5rem;
+    position: absolute;
+    top: .7rem;
+    right: .5rem;
+  }
+
   &__delete {
     position: absolute;
     right: .5rem;
@@ -61,6 +128,7 @@
     overflow-y: auto;
     min-height: 48px;
     padding: 0 1rem;
+    max-height: 100%;
 
     /* width */
     &::-webkit-scrollbar {

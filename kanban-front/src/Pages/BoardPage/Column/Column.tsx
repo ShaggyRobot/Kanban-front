@@ -1,17 +1,14 @@
-import React, { useState } from 'react';
-import { Fab, Paper, Modal } from '@mui/material';
+import React, { useRef, useState } from 'react';
+import { Fab, Paper } from '@mui/material';
 
-import {
-  Draggable,
-  DraggableProvided,
-  DraggableProvidedDragHandleProps,
-  Droppable,
-} from 'react-beautiful-dnd';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
 
 import DeleteForever from '@mui/icons-material/DeleteForever';
 import AddIcon from '@mui/icons-material/Add';
+import DoneIcon from '@mui/icons-material/Done';
+import ClearIcon from '@mui/icons-material/Clear';
 
-import { useDeleteColumnMutation } from '../../../Rtk';
+import { useDeleteColumnMutation, useUpdateColumnMutation } from '../../../Rtk';
 
 import { Task } from '../Task/Task';
 import { CreateTask } from '../../../Components/Forms';
@@ -20,74 +17,158 @@ import { IColumn, ITask } from '../../../Rtk/Api/types';
 
 import styles from './column.module.scss';
 import { ModalComponent } from '../../../Components/ModalComponent/ModalComponent';
+import { animateStyles } from '../utils/animateStyles';
+import { Confirm } from '../../../Components/Confirm/Confirm';
+import { useTranslation } from 'react-i18next';
 
-function Column(props: {
-  boardId: string;
-  column: IColumn;
-  dragProvided: DraggableProvided;
-}): JSX.Element {
-  const { boardId, column, dragProvided } = props;
-  const [open, setOpen] = useState(false);
+function Column(props: { boardId: string; column: IColumn; index: number }): JSX.Element {
+  const { boardId, column, index } = props;
+
+  const { t } = useTranslation();
+
   const [deleteColumn] = useDeleteColumnMutation();
+  const [updateColumn] = useUpdateColumnMutation();
 
-  const handleDelete = async () => {
-    await deleteColumn({ boardId, columnId: column.id });
+  const [open, setOpen] = useState(false);
+  const [confirm, setConfirm] = useState(false);
+  const [editActive, setEditActive] = useState(false);
+  const [title, setTitle] = useState(column.title);
+
+  const editInputRef = useRef<HTMLTextAreaElement>(null);
+
+  const handleDelete = () => {
+    deleteColumn({ boardId, columnId: column.id });
+    setConfirm(false);
+  };
+
+  const editCard = (value?: string) => {
+    const input = value || String(index + 1);
+    input !== title &&
+      updateColumn({
+        boardId,
+        columnId: column.id,
+        body: {
+          title: input,
+          order: index + 1,
+        },
+      });
+    setTitle(input);
+    setEditActive(false);
   };
 
   function DraggableTask(task: ITask, index: number) {
     return (
       <Draggable draggableId={task.id} key={task.id} index={index}>
-        {(provided) => (
-          <div
-            className={styles.task}
-            ref={provided.innerRef}
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-          >
-            <Task task={task} />
-          </div>
-        )}
+        {(provided, snap) => {
+          return (
+            <div
+              className={styles.task}
+              ref={provided.innerRef}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+              style={animateStyles(snap, provided.draggableProps.style)}
+            >
+              <Task task={task} />
+            </div>
+          );
+        }}
       </Draggable>
     );
   }
 
   return (
-    <Paper className={styles.column} elevation={3}>
-      <div className={styles.column__header} {...dragProvided.dragHandleProps}>
-        <div className={styles.column__title}>{column.title}</div>
-      </div>
+    <Draggable draggableId={column.id} key={column.id} index={index} isDragDisabled={editActive}>
+      {(provided, snap) => (
+        <div
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          className={styles.column__drag_wrap}
+          style={{
+            ...animateStyles(snap, provided.draggableProps.style),
+          }}
+        >
+          <Paper className={styles.column} elevation={3}>
+            <div className={styles.column__drag_handle} {...provided.dragHandleProps}></div>
 
-      <Droppable droppableId={column.id} type="task">
-        {(provided) => (
-          <div
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-            className={styles.column__tasklist}
-          >
-            {[...column.tasks]
-              .sort((a, b) => a.order - b.order)
-              .map((task, index) => DraggableTask(task, index))}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-      <div className={styles.create}>
-        <Fab color="primary" size="medium" onClick={() => setOpen(true)}>
-          <AddIcon />
-        </Fab>
-      </div>
+            <div className={styles.column__header}>
+              {editActive ? (
+                <div className={styles.column__edit_wrapper}>
+                  <textarea
+                    className={styles.column__edit_input}
+                    rows={1}
+                    defaultValue={title}
+                    ref={editInputRef}
+                    onKeyDown={(e) => e.key === 'Enter' && editCard(editInputRef.current?.value)}
+                    autoFocus
+                    maxLength={54}
+                  />
 
-      <div className={styles.column__delete}>
-        <DeleteForever color="error" onClick={() => handleDelete()} />
-      </div>
-      <ModalComponent
-        open={open}
-        setOpen={setOpen}
-        Elem={
-          <CreateTask boardId={boardId} columnId={column.id} modalClose={() => setOpen(false)} />
-        }
-      />
-    </Paper>
+                  <div className={styles.column__edit_controls}>
+                    <DoneIcon
+                      color="success"
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => {
+                        editCard(editInputRef.current?.value);
+                      }}
+                    />
+                    <ClearIcon
+                      color="error"
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => setEditActive(false)}
+                    />
+                  </div>
+                </div>
+              ) : (
+                <div
+                  className={styles.column__title}
+                  onClick={() => {
+                    setEditActive(true);
+                  }}
+                >
+                  {title}
+                </div>
+              )}
+            </div>
+
+            <Droppable droppableId={column.id} type="task">
+              {(provided) => (
+                <div
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  className={styles.column__tasklist}
+                >
+                  {[...column.tasks]
+                    .sort((a, b) => a.order - b.order)
+                    .map((task, index) => DraggableTask(task, index))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+            <div className={styles.create}>
+              <Fab color="primary" size="medium" onClick={() => setOpen(true)}>
+                <AddIcon />
+              </Fab>
+            </div>
+
+            <div className={styles.column__delete}>
+              <DeleteForever color="error" onClick={() => setConfirm(true)} />
+            </div>
+
+            <ModalComponent open={open} setOpen={setOpen}>
+              <CreateTask
+                boardId={boardId}
+                columnId={column.id}
+                modalClose={() => setOpen(false)}
+              />
+            </ModalComponent>
+
+            <ModalComponent open={confirm} setOpen={setConfirm}>
+              <Confirm message={`${t('messages.deleteColumn')}?`} action={handleDelete} />
+            </ModalComponent>
+          </Paper>
+        </div>
+      )}
+    </Draggable>
   );
 }
 

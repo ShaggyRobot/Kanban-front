@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Fab, Modal } from '@mui/material';
+import { Fab } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
 import { CreateColumn } from '../../Components/Forms/CreateColumn/CreateColumn';
@@ -12,14 +12,14 @@ import {
 import { Column } from './Column/Column';
 
 import styles from './board.module.scss';
-import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { IColumn, ITaskUpdate } from '../../Rtk/Api/types';
 import { ModalComponent } from '../../Components/ModalComponent/ModalComponent';
 
 function BoardPage(): JSX.Element {
   const { id: boardId } = useParams();
   const userId = localStorage.getItem('userId');
-  const { data } = useGetBoardQuery(boardId!);
+  const { data, isLoading } = useGetBoardQuery(boardId!);
   const [updateTask] = useUpdateTaskMutation();
   const [updateColumn] = useUpdateColumnMutation();
   const [columns, setColumns] = useState<Array<IColumn>>([]);
@@ -123,56 +123,46 @@ function BoardPage(): JSX.Element {
     }
   };
 
-  function DraggableColumn(column: IColumn, index: number) {
-    return (
-      <Draggable draggableId={column.id} key={column.id} index={index}>
-        {(provided) => (
-          <div
-            className={styles.column}
-            ref={provided.innerRef}
-            {...provided.draggableProps}
-            // {...provided.dragHandleProps}
-          >
-            <Column boardId={boardId!} column={column} key={column.id} dragProvided={provided} />
-          </div>
-        )}
-      </Draggable>
-    );
-  }
-
   return (
-    <div className={styles.board}>
-      <div className={styles.board__title}>{data?.title}</div>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="all-columns" direction="horizontal" type="column">
-          {(provided) => (
-            <div
-              className={styles.board__columns_list}
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-            >
-              {columns &&
-                [...columns]
-                  .sort((a, b) => a.order - b.order)
-                  .map((column, idx) => DraggableColumn(column, idx))}
+    <div className={`${styles.board}`}>
+      {isLoading ? (
+        <h1 className="float" style={{ margin: 'auto' }}>
+          Loading...
+        </h1>
+      ) : (
+        <>
+          <div className={styles.board__title}>{data?.title}</div>
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId="all-columns" direction="horizontal" type="column">
+              {(provided) => (
+                <div
+                  className={styles.board__columns_list}
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                >
+                  {columns &&
+                    [...columns]
+                      .sort((a, b) => a.order - b.order)
+                      .map((column, idx) => (
+                        <Column key={column.id} column={column} index={idx} boardId={boardId!} />
+                      ))}
 
-              {provided.placeholder}
+                  {provided.placeholder}
 
-              <div className={styles.create}>
-                <Fab onClick={() => setOpen(true)}>
-                  <AddIcon />
-                </Fab>
-              </div>
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-
-      <ModalComponent
-        open={open}
-        setOpen={setOpen}
-        Elem={<CreateColumn boardId={boardId!} modalClose={() => setOpen(false)} />}
-      />
+                  <div className={styles.create}>
+                    <Fab onClick={() => setOpen(true)}>
+                      <AddIcon />
+                    </Fab>
+                  </div>
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+          <ModalComponent open={open} setOpen={setOpen}>
+            <CreateColumn boardId={boardId!} modalClose={() => setOpen(false)} />
+          </ModalComponent>
+        </>
+      )}
     </div>
   );
 }

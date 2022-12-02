@@ -5,11 +5,13 @@ import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-import { useGetUsersQuery, useSignInMutation } from '../../../Rtk';
+import { IServerError, useSignInMutation } from '../../../Rtk';
 
 import { Button, Divider, Link, Paper, TextField } from '@mui/material';
+import { toast } from 'react-toastify';
 
 import styles from '../form.module.scss';
+import jwtDecode from 'jwt-decode';
 
 interface IFormValues {
   name: string;
@@ -21,7 +23,6 @@ function SignIn() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [handleSignIn] = useSignInMutation();
-  const { data: users } = useGetUsersQuery();
 
   const {
     register,
@@ -31,22 +32,47 @@ function SignIn() {
   } = useForm<IFormValues>({ mode: 'onSubmit' });
 
   const submitHandler = async (values: IFormValues) => {
+    const signinToast = toast.loading(`${t('messages.loggingIn')}...`);
     try {
       const signInBody = { login: values.login, password: values.password };
       const signInResponse = await handleSignIn(signInBody).unwrap();
+      const { userId } = jwtDecode(signInResponse.token) as { userId: string };
+
       localStorage.setItem('token', signInResponse.token);
       localStorage.setItem('login', values.login);
-      const user = users?.find((user) => user.login === values.login);
-      user && localStorage.setItem('userId', user?.id);
+      localStorage.setItem('userId', userId);
+
+      toast.update(signinToast, {
+        render: `${t('messages.success')} (*^o^)人 (^o^*)`,
+        type: 'success',
+        isLoading: false,
+        autoClose: 1000,
+      });
       navigate('/boards');
     } catch (error) {
-      console.log((error as { data: { message: string } }).data.message);
+      const { statusCode } = (error as IServerError).data;
+
+      toast.update(signinToast, {
+        render: (
+          <div>
+            {`${statusCode}`}
+            <br />
+            {t('messages.userNotFound')}
+            <br />
+            ¯\_(ツ)_/¯
+          </div>
+        ),
+        type: 'error',
+        isLoading: false,
+        autoClose: 2000,
+      });
     }
     reset();
   };
 
   return (
-    <Paper className={styles.form_container} elevation={3}>
+    <Paper className={styles.form__container} elevation={3}>
+      <h3>{t('form.log')}</h3>
       <form
         className={styles.form}
         id="form"
