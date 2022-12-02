@@ -1,7 +1,6 @@
 import React from 'react';
 import { IBoardFaceDTO } from '../../../Rtk';
 import { Divider, Paper } from '@mui/material';
-import { useDeleteBoardMutation } from '../../../Rtk';
 
 import styles from './board-card.module.scss';
 import { useNavigate } from 'react-router-dom';

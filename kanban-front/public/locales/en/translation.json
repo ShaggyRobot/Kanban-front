@@ -1,4 +1,7 @@
 {
+  "language": "Language",
+  "yes": "Yes",
+  "no": "No",
   "header": {
     "buttons": {
       "signin": "sign in",
@@ -12,12 +15,33 @@
     "submit": "Submit",
     "or": "Or",
     "register": "Register",
-    "log": "Log in"
+    "log": "Log in",
+    "delProfile": "Delete Profile",
+    "editProfile": "Edit Profile"
   },
   "boards": {
     "boards": "Boards",
     "title": "Title",
     "description": "Description",
-    "create": "Create"
+    "create": "Create",
+    "createBoard": "Create Board",
+    "editBoard": "Edit board",
+    "deleteBoard": "Delete board"
+  },
+
+  "columns": {
+    "createColumn": "Создать колонку",
+    "deleteColumn": "Удалить колонку"
+  },
+
+  "messages": {
+    "loginTaken": "Most likely login already taken.",
+    "success": "Success!",
+    "deleteColumn": "Delete Column",
+    "loggingIn": "Logging In",
+    "registering": "Registering",
+    "userNotFound": "User not found",
+    "userExists": "User already exists",
+    "deleteUser": "Delete user"
   }
 }

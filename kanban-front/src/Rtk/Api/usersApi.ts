@@ -26,9 +26,19 @@ const usersApi = createApi({
       providesTags: ['users'],
     }),
 
+    getUser: builder.query<ISignUpResponse, { id: string }>({
+      query: ({ id }) => {
+        return {
+          url: `/${id}`,
+          method: 'GET',
+        };
+      },
+      providesTags: ['users'],
+    }),
+
     editUser: builder.mutation<ISignUpResponse, { id: string; body: ISignUpBody }>({
       query: ({ id, body }) => {
-        return { url: `/${id}`, method: 'POST', body };
+        return { url: `/${id}`, method: 'PUT', body };
       },
       invalidatesTags: ['users'],
     }),
@@ -44,4 +54,5 @@ const usersApi = createApi({
 });
 
 export { usersApi };
-export const { useEditUserMutation, useDeleteUserMutation, useGetUsersQuery } = usersApi;
+export const { useEditUserMutation, useDeleteUserMutation, useGetUsersQuery, useGetUserQuery } =
+  usersApi;

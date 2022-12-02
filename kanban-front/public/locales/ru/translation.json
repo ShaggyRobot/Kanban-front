@@ -1,8 +1,11 @@
 {
+  "language": "Язык",
+  "yes": "Да",
+  "no": "Нет",
   "header": {
     "buttons": {
-      "signin": "войти",
-      "signup": "регистрация"
+      "signin": "Войти",
+      "signup": "Регистрация"
     }
   },
   "form": {
@@ -12,12 +15,32 @@
     "submit": "Отправить",
     "or": "Или",
     "register": "Зарегестрироваться",
-    "log": "Войти"
+    "log": "Вход",
+    "delProfile": "Удалить Профиль",
+    "editProfile": "Редактировать Профиль"
   },
   "boards": {
     "boards": "Доски",
     "title": "Название",
     "description": "Описание",
-    "create": "Создать"
+    "create": "Создать",
+    "createBoard": "Создать доску",
+    "editBoard": "Редактировать доску",
+    "deleteBoard": "Удалить доску"
+  },
+  "columns": {
+    "createColumn": "Создать колонку",
+    "deleteColumn": "Удалить колонку"
+  },
+
+  "messages": {
+    "loginTaken": "Скорее всего этот логин уже занят.",
+    "success": "Успех!",
+    "deleteColumn": "Удалить колонку",
+    "loggingIn": "Логинимся",
+    "registering": "Регистрируемся",
+    "userNotFound": "Пользователь не найден",
+    "userExists": "Такой пользователь уже есть",
+    "deleteUser": "Удалить пользователя"
   }
 }

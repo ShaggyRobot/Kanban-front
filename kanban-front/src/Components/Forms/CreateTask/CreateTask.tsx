@@ -10,14 +10,11 @@ interface IFormValues {
   description: string;
 }
 
-const CreateTask = React.forwardRef(function (
-  props: {
-    boardId: string;
-    columnId: string;
-    modalClose: () => void;
-  },
-  ref
-): JSX.Element {
+function CreateTask(props: {
+  boardId: string;
+  columnId: string;
+  modalClose: () => void;
+}): JSX.Element {
   const userId = localStorage.getItem('userId');
   const { boardId, columnId, modalClose } = props;
   const [createTask] = useCreateTaskMutation();
@@ -38,7 +35,7 @@ const CreateTask = React.forwardRef(function (
   };
 
   return (
-    <Paper className={styles.form_container}>
+    <Paper className={styles.form__container}>
       <form className={styles.form} onSubmit={handleSubmit(submitHandler)}>
         <TextField
           size="small"
@@ -65,5 +62,5 @@ const CreateTask = React.forwardRef(function (
       </form>
     </Paper>
   );
-});
+}
 export { CreateTask };
