@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Fab, Paper } from '@mui/material';
+import { Fab, Paper, Theme } from '@mui/material';
 
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 
@@ -20,6 +20,7 @@ import { ModalComponent } from '../../../Components/ModalComponent/ModalComponen
 import { animateStyles } from '../utils/animateStyles';
 import { Confirm } from '../../../Components/Confirm/Confirm';
 import { useTranslation } from 'react-i18next';
+import { yellow } from '@mui/material/colors';
 
 function Column(props: { boardId: string; column: IColumn; index: number }): JSX.Element {
   const { boardId, column, index } = props;
@@ -56,26 +57,6 @@ function Column(props: { boardId: string; column: IColumn; index: number }): JSX
     setEditActive(false);
   };
 
-  function DraggableTask(task: ITask, index: number) {
-    return (
-      <Draggable draggableId={task.id} key={task.id} index={index}>
-        {(provided, snap) => {
-          return (
-            <div
-              className={styles.task}
-              ref={provided.innerRef}
-              {...provided.draggableProps}
-              {...provided.dragHandleProps}
-              style={animateStyles(snap, provided.draggableProps.style)}
-            >
-              <Task task={task} />
-            </div>
-          );
-        }}
-      </Draggable>
-    );
-  }
-
   return (
     <Draggable draggableId={column.id} key={column.id} index={index} isDragDisabled={editActive}>
       {(provided, snap) => (
@@ -87,9 +68,12 @@ function Column(props: { boardId: string; column: IColumn; index: number }): JSX
             ...animateStyles(snap, provided.draggableProps.style),
           }}
         >
-          <Paper className={styles.column} elevation={3}>
-            <div className={styles.column__drag_handle} {...provided.dragHandleProps}></div>
-
+          <Paper
+            className={styles.column}
+            elevation={3}
+            sx={{ backgroundColor: 'aliceblue' }}
+            {...provided.dragHandleProps}
+          >
             <div className={styles.column__header}>
               {editActive ? (
                 <div className={styles.column__edit_wrapper}>
@@ -139,7 +123,15 @@ function Column(props: { boardId: string; column: IColumn; index: number }): JSX
                 >
                   {[...column.tasks]
                     .sort((a, b) => a.order - b.order)
-                    .map((task, index) => DraggableTask(task, index))}
+                    .map((task, index) => (
+                      <Task
+                        key={task.id}
+                        boardId={boardId}
+                        columnId={column.id}
+                        index={index}
+                        task={task}
+                      />
+                    ))}
                   {provided.placeholder}
                 </div>
               )}
@@ -163,7 +155,11 @@ function Column(props: { boardId: string; column: IColumn; index: number }): JSX
             </ModalComponent>
 
             <ModalComponent open={confirm} setOpen={setConfirm}>
-              <Confirm message={`${t('messages.deleteColumn')}?`} action={handleDelete} />
+              <Confirm
+                message={`${t('messages.deleteColumn')}?`}
+                action={handleDelete}
+                cancelAction={() => setConfirm(false)}
+              />
             </ModalComponent>
           </Paper>
         </div>

@@ -8,36 +8,12 @@
   padding: .5rem;
   overflow-x: hidden;
 
+
   &__drag_wrap {
     display: flex;
     height: fit-content;
     max-height: 100%;
     margin-right: 1rem;
-  }
-
-  &__drag_handle {
-    display: flex;
-    margin-top: -0.5rem;
-    height: 0.8rem;
-    justify-content: center;
-    align-items: center;
-
-    &::before{
-      position: absolute;
-      content: '';
-      border-top: 1.5px solid rgb(0 0 0 / 40%);
-      width: 50%;
-      box-shadow: rgb(0 0 0 / 50%) 2px 2px 4px 0;
-    }
-
-    &::after{
-      content: '';
-      position: absolute;
-      border-top: 1.5px solid rgb(0 0 0 / 40%);;
-      width: 50%;
-      margin-top: .5rem;
-      box-shadow: rgb(0 0 0 / 50%) 2px 2px 4px 0;
-    }
   }
 
   &__title {
@@ -50,7 +26,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 260;
-    cursor: text;
+    cursor: pointer;
   }
 
   &__edit_wrapper {
@@ -154,12 +130,6 @@
       background: pink;
     }
   }
-}
-
-
-.task{
-  margin: 0 0 1rem;
-  width: 220px;
 }
 
 .create{

@@ -39,16 +39,21 @@ function SignUp() {
   const submitHandler = async (values: IFormValues) => {
     const signupToast = toast.loading(`${t('messages.registering')}...`);
     try {
-      const signUpResponse = await handleSignUp(values).unwrap();
       toast.update(signupToast, { render: `${t('messages.loggingIn')}...` });
+      await handleSignUp(values).unwrap();
 
       const signInBody = { login: values.login, password: values.password };
       const signInResponse = await handleSignIn(signInBody).unwrap();
-      const { userId } = jwtDecode(signInResponse.token) as { userId: string };
 
-      localStorage.setItem('login', signUpResponse.login);
-      localStorage.setItem('token', signInResponse.token);
-      localStorage.setItem('userId', userId);
+      const { token } = signInResponse;
+      const { userId, login } = jwtDecode(signInResponse.token) as {
+        userId: string;
+        login: string;
+      };
+
+      Object.entries({ userId, login, token }).forEach((entry) => {
+        localStorage.setItem(entry[0], entry[1]);
+      });
 
       toast.update(signupToast, {
         render: `${t('messages.success')} (*^o^)人 (^o^*)`,
@@ -95,7 +100,6 @@ function SignUp() {
             size="small"
             label={t('form.name')!}
             {...register('name', { required: 'true' })}
-            autoComplete="off"
           />
         </Paper>
         <Paper elevation={3}>

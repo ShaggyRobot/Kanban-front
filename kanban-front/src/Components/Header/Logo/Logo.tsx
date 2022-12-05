@@ -14,7 +14,7 @@ function Logo(): JSX.Element {
       onMouseEnter={() => setAnimate(true)}
       onAnimationEnd={() => setAnimate(false)}
       title="Go to main"
-      onClick={() => navigate('')}
+      onClick={() => navigate('/home')}
     >
       <KanbanLogo />
     </div>

@@ -36,18 +36,23 @@ function CreateBoard(props: { modalClose: () => void }): JSX.Element {
   return (
     <Paper elevation={2} className={styles.form__container}>
       <h3>{t('boards.createBoard')}</h3>
-      <form id="boardCreate" className={styles.form} onSubmit={handleSubmit(boardCreate)}>
+      <form
+        id="boardCreate"
+        className={styles.form}
+        onSubmit={handleSubmit(boardCreate)}
+        autoComplete="off"
+      >
         <TextField
-          maxRows={1}
+          rows={1}
           size="small"
           label={t('boards.title')}
           error={!!errors.title}
+          autoComplete="off"
           {...register('title', { required: 'true' })}
         ></TextField>
 
         <TextField
           multiline
-          maxRows={8}
           rows={6}
           className={styles.form__txt_area}
           label={`${t('boards.description')}`}

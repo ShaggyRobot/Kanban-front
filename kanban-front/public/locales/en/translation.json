@@ -28,12 +28,13 @@
     "editBoard": "Edit board",
     "deleteBoard": "Delete board"
   },
-
-  "columns": {
-    "createColumn": "Создать колонку",
-    "deleteColumn": "Удалить колонку"
+  "tasks": {
+    "createTask": "Create task"
   },
-
+  "columns": {
+    "createColumn": "Create column",
+    "deleteColumn": "Delete column"
+  },
   "messages": {
     "loginTaken": "Most likely login already taken.",
     "success": "Success!",
@@ -42,6 +43,21 @@
     "registering": "Registering",
     "userNotFound": "User not found",
     "userExists": "User already exists",
-    "deleteUser": "Delete user"
-  }
+    "deleteUser": "Delete account"
+  },
+
+  "aboutKanban": {
+    "p1": "Kanban in Japanese means 'signboard' or 'billboard'. The method appeared as part of the famous Toyota production system, from which the concept of lean manufacturing grew. Kanban has spread from the automaker's assembly line to almost all areas of business, receiving special recognition in IT, where it has become part of agile and scrum development methodologies.",
+    "p2": "This method of development implements the principle of 'just in time' and contributes to an even distribution of workload between employees. With this approach, the entire development process is transparent to all team members. Tasks are placed into a separate list as they arrive, from where each developer can extract the required task. Kanban is a visual development system that shows what needs to be created, when and how much.",
+    "p3": "Kanban boards are just one part of the kanban method. In fact, it is a set of change management principles, principles of service orientation and about 150 practices."
+  },
+  "aboutRSS": {
+    "p1": "RS School is free-of-charge and community-based education program conducted by The Rolling Scopes developer community since 2013.",
+    "p2": "Everyone can study at RS School, regardless of age, professional employment, or place of residence.",
+    "p3": "The mentors and trainers of our school are front-end and javascript developers from different companies and countries.",
+    "p4": "Teach it forward",
+    "p5": "According to this principle, students study at school for free, but we request that they return as mentors to pass on their knowledge to the next generation of students."
+  },
+  "hi": "Hi! My name is Alex.",
+  "tech": "Thechnologies used in this progect:"
 }

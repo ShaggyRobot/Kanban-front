@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { IBoardFaceDTO, useUpdateBoardMutation } from '../../../Rtk';
 
 import styles from '../form.module.scss';
+import { emit } from 'process';
 
 interface IFormValues {
   title: string;
@@ -49,7 +50,7 @@ function EditBoard(props: { board: IBoardFaceDTO; closeModal: () => void }): JSX
         ></TextField>
         <TextField
           multiline
-          maxRows={8}
+          rows={8}
           label={t('boards.description')}
           className={styles.form__txt_area}
           placeholder={`${t('boards.description')}`}

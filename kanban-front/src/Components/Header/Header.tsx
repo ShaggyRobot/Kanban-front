@@ -23,9 +23,9 @@ function Header() {
       <Logo />
       {localStorage.getItem('token') && (
         <Button
-          variant="contained"
+          variant="outlined"
+          color="success"
           size="small"
-          color="secondary"
           sx={{ width: '10rem' }}
           onClick={(e) => {
             e.preventDefault();

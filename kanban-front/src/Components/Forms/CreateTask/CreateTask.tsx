@@ -1,9 +1,10 @@
+import React, { useTransition } from 'react';
 import { Button, Paper, TextField } from '@mui/material';
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useCreateTaskMutation } from '../../../Rtk';
 
 import styles from '../form.module.scss';
+import { useTranslation } from 'react-i18next';
 
 interface IFormValues {
   title: string;
@@ -16,6 +17,7 @@ function CreateTask(props: {
   modalClose: () => void;
 }): JSX.Element {
   const userId = localStorage.getItem('userId');
+  const { t } = useTranslation();
   const { boardId, columnId, modalClose } = props;
   const [createTask] = useCreateTaskMutation();
 
@@ -36,11 +38,13 @@ function CreateTask(props: {
 
   return (
     <Paper className={styles.form__container}>
-      <form className={styles.form} onSubmit={handleSubmit(submitHandler)}>
+      <h3>{t('tasks.createTask')}</h3>
+      <form className={styles.form} onSubmit={handleSubmit(submitHandler)} autoComplete="off">
         <TextField
           size="small"
           type="text"
           label="Title"
+          error={!!errors.title}
           {...register('title', { required: 'true' })}
         />
 
@@ -48,6 +52,7 @@ function CreateTask(props: {
           size="small"
           type="text"
           label="Description"
+          error={!!errors.description}
           {...register('description', { required: 'true' })}
         />
 
