@@ -5,8 +5,12 @@ import { useTranslation } from 'react-i18next';
 
 import styles from './confirm.module.scss';
 
-function Confirm(props: { message: string; action: () => void }): JSX.Element {
-  const { message, action } = props;
+function Confirm(props: {
+  message: string;
+  action: () => void;
+  cancelAction?: () => void;
+}): JSX.Element {
+  const { message, action, cancelAction } = props;
   const { t } = useTranslation();
   return (
     <Paper elevation={3} className={styles.confirm}>
@@ -14,7 +18,13 @@ function Confirm(props: { message: string; action: () => void }): JSX.Element {
       <Button variant="contained" color="error" onClick={action} fullWidth>
         {t('yes')}
       </Button>
-      <Button variant="contained" color="success" className="close" fullWidth>
+      <Button
+        variant="contained"
+        color="success"
+        className="close"
+        fullWidth
+        onClick={cancelAction ? cancelAction : undefined}
+      >
         {t('no')}
       </Button>
     </Paper>

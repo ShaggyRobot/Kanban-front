@@ -11,13 +11,7 @@ function BoardCard(props: { board: IBoardFaceDTO }): JSX.Element {
   const navigate = useNavigate();
 
   return (
-    <Paper
-      className={styles.card}
-      elevation={3}
-      onClick={() => {
-        navigate(`/boards/${board.id}`);
-      }}
-    >
+    <Paper className={styles.card} elevation={3}>
       <BoardCardHeader board={board} />
       <Divider style={{ margin: '.5rem 0' }} />
       <div className={styles.card__description}>{board.description}</div>

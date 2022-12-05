@@ -18,30 +18,6 @@
     height: max-content;
     flex-direction: row;
     overflow: auto;
-
-    /* width */
-    &::-webkit-scrollbar {
-      height: 8px;
-      border-radius: 0.5rem;
-    }
-
-    /* Track */
-    &::-webkit-scrollbar-track {
-      background: rgb(43 102 195);
-      border-radius: 0.5rem;
-    }
-
-    /* Handle */
-    &::-webkit-scrollbar-thumb {
-      background: rgb(205 219 152);
-      border-radius: 0.5rem;
-    }
-
-
-    /* Handle on hover */
-    &::-webkit-scrollbar-thumb:hover {
-      background: pink;
-    }
   }
 }
 

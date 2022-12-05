@@ -36,11 +36,15 @@ function SignIn() {
     try {
       const signInBody = { login: values.login, password: values.password };
       const signInResponse = await handleSignIn(signInBody).unwrap();
-      const { userId } = jwtDecode(signInResponse.token) as { userId: string };
+      const { token } = signInResponse;
+      const { userId, login } = jwtDecode(signInResponse.token) as {
+        userId: string;
+        login: string;
+      };
 
-      localStorage.setItem('token', signInResponse.token);
-      localStorage.setItem('login', values.login);
-      localStorage.setItem('userId', userId);
+      Object.entries({ userId, login, token }).forEach((entry) => {
+        localStorage.setItem(entry[0], entry[1]);
+      });
 
       toast.update(signinToast, {
         render: `${t('messages.success')} (*^o^)人 (^o^*)`,
@@ -48,6 +52,7 @@ function SignIn() {
         isLoading: false,
         autoClose: 1000,
       });
+
       navigate('/boards');
     } catch (error) {
       const { statusCode } = (error as IServerError).data;
@@ -73,12 +78,7 @@ function SignIn() {
   return (
     <Paper className={styles.form__container} elevation={3}>
       <h3>{t('form.log')}</h3>
-      <form
-        className={styles.form}
-        id="form"
-        onSubmit={handleSubmit(submitHandler)}
-        autoComplete="off"
-      >
+      <form className={styles.form} id="form" onSubmit={handleSubmit(submitHandler)}>
         <Paper elevation={3}>
           <TextField
             error={!!errors.login}

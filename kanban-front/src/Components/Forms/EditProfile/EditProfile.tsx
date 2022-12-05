@@ -45,6 +45,8 @@ function EditProfile(): JSX.Element {
   } = useForm<IFormValues>({ mode: 'onSubmit' });
 
   const submitHandler = async (values: IFormValues) => {
+    if (!userId) navigate('/home');
+
     const body: ISignUpBody = {
       login: values.login,
       name: values.name,
@@ -63,13 +65,9 @@ function EditProfile(): JSX.Element {
         isLoading: false,
         autoClose: 1000,
       });
-
-      setTimeout(() => {
-        reset();
-        navigate(-1);
-      }, 1000);
-    } catch (error) {
-      const message = (error as IServerError).data.message;
+    } catch (err) {
+      const error = err as IServerError;
+      const { statusCode, message } = error.data;
 
       toast.update(updateUserToast, {
         render: (
@@ -85,6 +83,7 @@ function EditProfile(): JSX.Element {
         isLoading: false,
         autoClose: 2000,
       });
+      if (statusCode === 401) navigate('/home');
     }
     reset();
   };

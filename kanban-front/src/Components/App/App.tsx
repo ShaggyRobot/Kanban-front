@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 
 import { ProtectedRoute } from './ProtectedRoute';
 import { BoardPage, BoardsPage, HomePage, SignUpPage, SignInPage } from '../../Pages';
@@ -10,13 +10,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import Layout from './Layout';
 import './App.scss';
 import { EditProfilePage } from '../../Pages/EditProfilePage/EditProfilePage';
+import { Index } from '../../Pages/Index/Index';
 
 function App() {
+  const { pathname } = useLocation();
   return (
-    <div className="app">
+    <div className={pathname === '/home' ? 'app-home' : 'app'}>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<HomePage />} />
+          <Route index element={<Index />} />
+          <Route path="/home" element={<HomePage />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/signin" element={<SignInPage />} />
           <Route path="/editprofile" element={<ProtectedRoute outlet={<EditProfilePage />} />} />

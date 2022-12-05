@@ -59,13 +59,29 @@ function ModalComponent(props: {
 
   const Content = styled.div`
     z-index: 2010;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    width: 100%;
+    height: 100%;
     animation: ${contentKf} 0.3s cubic-bezier(0.53, 0.76, 0.46, 1.32);
   `;
 
   return (
-    <Overlay onClick={(e) => handleClose(e)} className="close">
-      <Content className="content">{children}</Content>
-    </Overlay>
+    <>
+      {open && (
+        <>
+          <Overlay onClick={(e) => handleClose(e)} className="close" />
+          <Content className="content">
+            <div style={{ pointerEvents: 'all' }}>{children}</div>
+          </Content>
+        </>
+      )}
+    </>
   );
 }
 export { ModalComponent };
