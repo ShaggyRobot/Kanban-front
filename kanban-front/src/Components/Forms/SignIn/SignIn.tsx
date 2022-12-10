@@ -108,7 +108,9 @@ function SignIn() {
           {t('form.submit')}
         </Button>
 
-        <Divider>{t('form.or')}</Divider>
+        <div>
+          <Divider>{t('form.or')}</Divider>
+        </div>
 
         <NavLink to="/signup" style={{ margin: 'auto' }}>
           <Link component="button" underline="hover">
