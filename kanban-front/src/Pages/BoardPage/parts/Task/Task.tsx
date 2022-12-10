@@ -3,9 +3,9 @@ import { Draggable } from 'react-beautiful-dnd';
 
 import { Divider, Paper } from '@mui/material';
 
-import { animateStyles } from '../utils/animateStyles';
-import { TaskHeader } from './Header/TaskHeader';
-import { TaskControls } from './Controls/TaskControls';
+import { animateStyles } from '../../utils/animateStyles';
+import { TaskHeader } from './parts/TaskHeader/TaskHeader';
+import { TaskControls } from './parts/TaskControls/TaskControls';
 
 import { ITask } from '@Rtk';
 

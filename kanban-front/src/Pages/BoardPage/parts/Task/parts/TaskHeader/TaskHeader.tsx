@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from '../task.module.scss';
+import styles from '../../task.module.scss';
 
 function TaskHeader(props: {
   text: string;

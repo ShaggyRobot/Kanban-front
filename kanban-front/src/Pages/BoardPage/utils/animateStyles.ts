@@ -11,11 +11,14 @@ const animateStyles = (
       transition: `all .2s ease`,
     };
   }
+
   return {
     borderRadius: '4px',
     ...draggableStyle,
-    ...(isDragging && { transition: `${draggableStyle?.transition}, box-shadow .2s ease` }),
-    ...(isDragging && { boxShadow: '0px 0px 12px 0px #3c3b048c' }),
+    ...(isDragging && {
+      boxShadow: '0px 0px 12px 0px #3c3b048c',
+      transition: `${draggableStyle?.transition}, box-shadow .2s ease`,
+    }),
   };
 };
 

@@ -12,5 +12,5 @@ export {
   EditBoard,
   EditProfile,
   UpdateTask,
-} from './Forms';
+} from './forms';
 export { ModalComponent } from './ModalComponent/ModalComponent';

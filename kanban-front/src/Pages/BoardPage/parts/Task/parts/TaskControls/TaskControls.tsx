@@ -11,7 +11,7 @@ import { ModalComponent, Confirm, UpdateTask } from '@Components';
 
 import { ITask, useDeleteTaskMutation } from '@Rtk';
 
-import styles from '../task.module.scss';
+import styles from '../../task.module.scss';
 
 function TaskControls(props: { task: ITask; columnId: string; boardId: string }): JSX.Element {
   const { boardId, columnId, task } = props;

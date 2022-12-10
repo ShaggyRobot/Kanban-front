@@ -15,7 +15,7 @@ import { Task } from '../Task/Task';
 
 import { useDeleteColumnMutation, useUpdateColumnMutation, IColumn } from '@Rtk';
 
-import { animateStyles } from '../utils/animateStyles';
+import { animateStyles } from '../../utils/animateStyles';
 
 import styles from './column.module.scss';
 

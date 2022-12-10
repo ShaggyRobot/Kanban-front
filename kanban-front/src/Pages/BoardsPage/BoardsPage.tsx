@@ -5,7 +5,7 @@ import { Fab } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
 import { CreateBoard, ModalComponent } from '@Components';
-import { BoardCard } from './BoardCard/BoardCard';
+import { BoardCard } from './parts/BoardCard/BoardCard';
 
 import { useGetBoardsQuery } from '@Rtk';
 

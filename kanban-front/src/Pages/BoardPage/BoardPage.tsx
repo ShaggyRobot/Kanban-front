@@ -8,7 +8,7 @@ import { Fab } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
 import { CreateColumn, ModalComponent } from '@Components';
-import { Column } from './Column/Column';
+import { Column } from './parts/Column/Column';
 
 import {
   useGetBoardQuery,
@@ -50,7 +50,7 @@ function BoardPage(): JSX.Element {
       const endColumn = columns.find((column) => column.id === res.destination!.droppableId);
       const draggedTask = startColumn?.tasks.find((task) => task.id === res.draggableId);
 
-      // * Same column ----------------------------------------------------------------------------
+      // * Same column ---------------------------------------------------------
       if (startColumn?.id === endColumn?.id) {
         const newTasks = Array.from(startColumn!.tasks).sort((a, b) => a.order - b.order); // !!!
         const [dt] = newTasks.splice(res.source.index, 1);

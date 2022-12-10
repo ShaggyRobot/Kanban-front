@@ -11,7 +11,7 @@ import {
   useDeleteUserMutation,
   useEditUserMutation,
   useGetUserQuery,
-} from '../../../Rtk';
+} from '@Rtk';
 import { useTranslation } from 'react-i18next';
 
 import styles from '../form.module.scss';

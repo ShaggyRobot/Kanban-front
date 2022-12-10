@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Divider, Paper } from '@mui/material';
 
-import { BoardCardHeader } from './Header/BoardCardHeader';
+import { BoardCardHeader } from './parts/BoardCardHeader/BoardCardHeader';
 
 import { IBoardFaceDTO } from '@Rtk';
 
