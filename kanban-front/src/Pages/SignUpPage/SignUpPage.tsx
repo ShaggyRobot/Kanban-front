@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { SignUp } from '../../Components/Forms';
+
+import { SignUp } from '@Components';
 
 function SignUpPage(): JSX.Element {
   if (localStorage.getItem('token')) {

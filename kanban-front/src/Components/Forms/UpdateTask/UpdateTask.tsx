@@ -1,8 +1,11 @@
 import React from 'react';
-import { Button, Paper, TextField } from '@mui/material';
+
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { ITask, ITaskUpdate, useUpdateTaskMutation } from '../../../Rtk';
+
+import { Button, Paper, TextField } from '@mui/material';
+
+import { ITask, ITaskUpdate, useUpdateTaskMutation } from '@Rtk';
 
 import styles from '../form.module.scss';
 
@@ -39,16 +42,20 @@ function UpdateTask(props: {
       boardId,
       columnId,
     };
-    setIsUpdating && setIsUpdating(true);
-    reset();
+
     modalClose();
-    await updateTask({ taskId: task.id, columnId, boardId, body });
-    setIsUpdating && setIsUpdating(false);
+    reset();
+
+    if (task.title !== values.title || task.description !== values.description) {
+      setIsUpdating && setIsUpdating(true);
+      await updateTask({ taskId: task.id, columnId, boardId, body });
+      setIsUpdating && setIsUpdating(false);
+    }
   };
 
   return (
     <Paper className={styles.form__container}>
-      <h3>{t('tasks.createTask')}</h3>
+      <h3>{t('tasks.updateTask')}</h3>
       <form className={styles.form} onSubmit={handleSubmit(submitHandler)} autoComplete="off">
         <TextField
           size="small"
@@ -76,7 +83,7 @@ function UpdateTask(props: {
           type="submit"
           disabled={!!Object.keys(errors).length}
         >
-          Submit
+          {t('form.submit')}
         </Button>
       </form>
     </Paper>

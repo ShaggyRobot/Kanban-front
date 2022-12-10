@@ -45,5 +45,6 @@
       "pragma": "React",
       "version": "detect"
     }
-  }
+  },
+  "ignorePatterns": ["**/*.js"]
 }

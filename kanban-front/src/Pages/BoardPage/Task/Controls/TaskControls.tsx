@@ -1,27 +1,28 @@
-import { IconButton, Menu } from '@mui/material';
 import React, { useState } from 'react';
+
+import { IconButton, Menu } from '@mui/material';
 
 import DeleteForever from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { ITask, useDeleteTaskMutation } from '../../../../Rtk';
+import { ModalComponent, Confirm, UpdateTask } from '@Components';
+
+import { ITask, useDeleteTaskMutation } from '@Rtk';
 
 import styles from '../task.module.scss';
-import { ModalComponent } from '../../../../Components/ModalComponent/ModalComponent';
-import { Confirm } from '../../../../Components/Confirm/Confirm';
-import { UpdateTask } from '../../../../Components/Forms/UpdateTask/UpdateTask';
 
 function TaskControls(props: { task: ITask; columnId: string; boardId: string }): JSX.Element {
   const { boardId, columnId, task } = props;
-  const [deleteTask, { isLoading: isDeleting }] = useDeleteTaskMutation();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const menuOpen = !!anchorEl;
   const [isUpdating, setIsUpdating] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const [open, setOpen] = useState(false);
+  const menuOpen = !!anchorEl;
+
+  const [deleteTask, { isLoading: isDeleting }] = useDeleteTaskMutation();
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -34,6 +35,11 @@ function TaskControls(props: { task: ITask; columnId: string; boardId: string })
 
   const deleteTaskHandler = () => {
     deleteTask({ boardId, columnId, taskId: task.id });
+    setAnchorEl(null);
+    setConfirm(false);
+  };
+
+  const handleConfirmNegative = () => {
     setAnchorEl(null);
     setConfirm(false);
   };
@@ -76,7 +82,7 @@ function TaskControls(props: { task: ITask; columnId: string; boardId: string })
         <Confirm
           message="Delete task"
           action={deleteTaskHandler}
-          cancelAction={() => setAnchorEl(null)}
+          cancelAction={handleConfirmNegative}
         />
       </ModalComponent>
 

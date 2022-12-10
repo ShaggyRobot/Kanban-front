@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { SignIn } from '../../Components/Forms';
+
+import { SignIn } from '@Components';
 
 function SignInPage(): JSX.Element {
   if (localStorage.getItem('token')) {

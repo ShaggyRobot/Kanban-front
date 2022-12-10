@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
-import { endpoints } from '../../CONSTS/endpoints';
-import { ISignUpBody, ISignUpResponse } from './types';
+
+import { ISignUpBody, ISignUpResponse } from '@Rtk';
+import { endpoints } from '@Endpoints';
 
 const usersApi = createApi({
   reducerPath: 'usersApi',

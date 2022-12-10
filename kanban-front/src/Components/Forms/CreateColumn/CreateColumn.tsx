@@ -1,9 +1,10 @@
-import { Button, TextField } from '@mui/material';
-import Paper from '@mui/material/Paper';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useCreateColumnMutation } from '../../../Rtk/Api/boardsApi';
+
+import { Button, TextField, Paper } from '@mui/material';
+
+import { useCreateColumnMutation } from '@Rtk';
 
 import styles from '../form.module.scss';
 

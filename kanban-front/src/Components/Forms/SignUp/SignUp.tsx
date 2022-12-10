@@ -1,19 +1,17 @@
 import React from 'react';
-
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import { Divider, Link, Paper } from '@mui/material';
+import { useNavigate, NavLink } from 'react-router-dom';
 
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-
-import { IServerError, useSignInMutation, useSignUpMutation } from '../../../Rtk';
 import { useTranslation } from 'react-i18next';
 
-import { NavLink } from 'react-router-dom';
-import styles from '../form.module.scss';
 import jwtDecode from 'jwt-decode';
 import { toast } from 'react-toastify';
+
+import { Button, TextField, Divider, Link, Paper } from '@mui/material';
+
+import { IServerError, useSignInMutation, useSignUpMutation } from '@Rtk';
+
+import styles from '../form.module.scss';
 
 interface IFormValues {
   name: string;
@@ -38,9 +36,10 @@ function SignUp() {
 
   const submitHandler = async (values: IFormValues) => {
     const signupToast = toast.loading(`${t('messages.registering')}...`);
+
     try {
-      toast.update(signupToast, { render: `${t('messages.loggingIn')}...` });
       await handleSignUp(values).unwrap();
+      toast.update(signupToast, { render: `${t('messages.loggingIn')}...` });
 
       const signInBody = { login: values.login, password: values.password };
       const signInResponse = await handleSignIn(signInBody).unwrap();
@@ -88,6 +87,7 @@ function SignUp() {
   return (
     <Paper className={styles.form__container} elevation={3}>
       <h3>{t('form.register')}</h3>
+
       <form
         className={styles.form}
         id="form"
@@ -102,6 +102,7 @@ function SignUp() {
             {...register('name', { required: 'true' })}
           />
         </Paper>
+
         <Paper elevation={3}>
           <TextField
             error={!!errors.login}
@@ -110,6 +111,7 @@ function SignUp() {
             {...register('login', { required: 'true' })}
           />
         </Paper>
+
         <Paper elevation={3}>
           <TextField
             error={!!errors.password}
@@ -128,9 +130,11 @@ function SignUp() {
         >
           {t('form.submit')}
         </Button>
+
         <div>
           <Divider>{t('form.or')}</Divider>
         </div>
+
         <NavLink to="/signin" style={{ margin: 'auto' }}>
           <Link component="button" underline="hover">
             {t('form.log')}

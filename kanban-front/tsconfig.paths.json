@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"],
+      "@Rtk": ["./src/Rtk"],
+      "@Pages": ["./src/Pages"],
+      "@Assets": ["./src/assets"],
+      "@Components": ["./src/Components"],
+      "@Endpoints": ["./src/CONSTS/endpoints"]
+    }
+  }
+}

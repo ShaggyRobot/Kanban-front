@@ -1,12 +1,15 @@
-import { Button, Menu, MenuItem } from '@mui/material';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+
+import { Button, Menu, MenuItem } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import EditIcon from '@mui/icons-material/Edit';
 
 function UserDashboard(): JSX.Element {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const login = localStorage.getItem('login');
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -53,11 +56,11 @@ function UserDashboard(): JSX.Element {
       >
         <MenuItem onClick={handleEdit}>
           <EditIcon color="info" sx={{ mr: '.5rem' }} />
-          Edit Profile
+          {t('profile')}
         </MenuItem>
         <MenuItem onClick={handleLogOut}>
           <LogoutIcon color="info" sx={{ mr: '.5rem' }} />
-          Log Out
+          {t('logout')}
         </MenuItem>
       </Menu>
     </div>

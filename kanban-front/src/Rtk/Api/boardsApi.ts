@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { endpoints } from '../../CONSTS/endpoints';
 import {
   ICreateBoardBody,
   IBoardFaceDTO,
@@ -8,7 +7,9 @@ import {
   ICreateTaskBody,
   ITaskUpdate,
   IColumnUpdate,
-} from './types';
+} from '@Rtk';
+
+import { endpoints } from '@Endpoints';
 
 const boardsApi = createApi({
   reducerPath: 'boardsApi',

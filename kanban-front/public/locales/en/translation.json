@@ -2,6 +2,8 @@
   "language": "Language",
   "yes": "Yes",
   "no": "No",
+  "profile": "Profile",
+  "logout": "Log out",
   "header": {
     "buttons": {
       "signin": "sign in",
@@ -29,7 +31,8 @@
     "deleteBoard": "Delete board"
   },
   "tasks": {
-    "createTask": "Create task"
+    "createTask": "Create task",
+    "updateTask": "Update task"
   },
   "columns": {
     "createColumn": "Create column",

@@ -1,26 +1,23 @@
 import React, { useRef, useState } from 'react';
-import { Fab, Paper, Theme } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 
-import DeleteForever from '@mui/icons-material/DeleteForever';
 import AddIcon from '@mui/icons-material/Add';
 import DoneIcon from '@mui/icons-material/Done';
 import ClearIcon from '@mui/icons-material/Clear';
+import DeleteForever from '@mui/icons-material/DeleteForever';
 
-import { useDeleteColumnMutation, useUpdateColumnMutation } from '../../../Rtk';
+import { Fab, Paper } from '@mui/material';
 
+import { CreateTask, Confirm, ModalComponent } from '@Components';
 import { Task } from '../Task/Task';
-import { CreateTask } from '../../../Components/Forms';
 
-import { IColumn, ITask } from '../../../Rtk/Api/types';
+import { useDeleteColumnMutation, useUpdateColumnMutation, IColumn } from '@Rtk';
+
+import { animateStyles } from '../utils/animateStyles';
 
 import styles from './column.module.scss';
-import { ModalComponent } from '../../../Components/ModalComponent/ModalComponent';
-import { animateStyles } from '../utils/animateStyles';
-import { Confirm } from '../../../Components/Confirm/Confirm';
-import { useTranslation } from 'react-i18next';
-import { yellow } from '@mui/material/colors';
 
 function Column(props: { boardId: string; column: IColumn; index: number }): JSX.Element {
   const { boardId, column, index } = props;

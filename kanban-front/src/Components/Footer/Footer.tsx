@@ -1,6 +1,7 @@
 import React from 'react';
-import { LangControl } from '../LangControl/LangControl';
-import logo from '../../assets/rsslogo.png';
+import { LangControl } from '@Components';
+
+import logo from '@Assets/rsslogo.png';
 
 import styles from './footer.module.scss';
 

@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { endpoints } from '../../CONSTS/endpoints';
+import { endpoints } from '@Endpoints';
 
-import { ISignInResponse, ISignInBody, ISignUpBody, ISignUpResponse } from './types';
+import { ISignInResponse, ISignInBody, ISignUpBody, ISignUpResponse } from '@Rtk';
 
 const authApi = createApi({
   reducerPath: 'authApi',

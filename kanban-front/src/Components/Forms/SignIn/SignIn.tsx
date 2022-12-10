@@ -1,17 +1,16 @@
 import React from 'react';
+import { useNavigate, NavLink } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { NavLink } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-
-import { IServerError, useSignInMutation } from '../../../Rtk';
+import { toast } from 'react-toastify';
+import jwtDecode from 'jwt-decode';
 
 import { Button, Divider, Link, Paper, TextField } from '@mui/material';
-import { toast } from 'react-toastify';
+
+import { IServerError, useSignInMutation } from '@Rtk';
 
 import styles from '../form.module.scss';
-import jwtDecode from 'jwt-decode';
 
 interface IFormValues {
   name: string;
@@ -78,6 +77,7 @@ function SignIn() {
   return (
     <Paper className={styles.form__container} elevation={3}>
       <h3>{t('form.log')}</h3>
+
       <form className={styles.form} id="form" onSubmit={handleSubmit(submitHandler)}>
         <Paper elevation={3}>
           <TextField
@@ -88,6 +88,7 @@ function SignIn() {
             {...register('login', { required: 'true' })}
           />
         </Paper>
+
         <Paper elevation={3}>
           <TextField
             error={!!errors.password}
@@ -106,7 +107,9 @@ function SignIn() {
         >
           {t('form.submit')}
         </Button>
+
         <Divider>{t('form.or')}</Divider>
+
         <NavLink to="/signup" style={{ margin: 'auto' }}>
           <Link component="button" underline="hover">
             {t('form.register')}

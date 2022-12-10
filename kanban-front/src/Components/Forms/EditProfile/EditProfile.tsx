@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
-
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import { Divider, Paper } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
-import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+
+import { Button, TextField, Divider, Paper } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import {
   IServerError,
@@ -100,14 +97,20 @@ function EditProfile(): JSX.Element {
     handleLogOut();
   };
 
+  const handleConfirmNegative = () => {
+    setConfirm(false);
+  };
+
   return (
     <>
       {userData ? (
         <Paper className={styles.form__container} elevation={3}>
           <h3>{t('form.editProfile')}</h3>
+
           <div className={styles.form__icon_back} onClick={() => navigate(-1)}>
             <ArrowBackIcon color="primary" />
           </div>
+
           <form
             className={styles.form}
             id="form"
@@ -124,6 +127,7 @@ function EditProfile(): JSX.Element {
                 defaultValue={userData?.name}
               />
             </Paper>
+
             <Paper elevation={3}>
               <TextField
                 error={!!errors.login}
@@ -133,6 +137,7 @@ function EditProfile(): JSX.Element {
                 defaultValue={userData?.login}
               />
             </Paper>
+
             <Paper elevation={3}>
               <TextField
                 error={!!errors.password}
@@ -156,8 +161,13 @@ function EditProfile(): JSX.Element {
               {t('form.delProfile')}
             </Button>
           </form>
+
           <ModalComponent open={confirm} setOpen={setConfirm}>
-            <Confirm message={`${t('messages.deleteUser')}?`} action={handleDelete} />
+            <Confirm
+              message={`${t('messages.deleteUser')}?`}
+              action={handleDelete}
+              cancelAction={handleConfirmNegative}
+            />
           </ModalComponent>
         </Paper>
       ) : (

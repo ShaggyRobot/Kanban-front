@@ -1,29 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
+import { toast } from 'react-toastify';
+
 import { Fab } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
-import { CreateColumn } from '../../Components/Forms/CreateColumn/CreateColumn';
+import { CreateColumn, ModalComponent } from '@Components';
+import { Column } from './Column/Column';
+
 import {
   useGetBoardQuery,
   useUpdateColumnMutation,
   useUpdateTaskMutation,
-} from '../../Rtk/Api/boardsApi';
-import { Column } from './Column/Column';
+  IColumn,
+  IServerError,
+  ITaskUpdate,
+} from '@Rtk';
 
 import styles from './board.module.scss';
-import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
-import { IColumn, ITaskUpdate } from '../../Rtk/Api/types';
-import { ModalComponent } from '../../Components/ModalComponent/ModalComponent';
 
 function BoardPage(): JSX.Element {
   const { id: boardId } = useParams();
   const userId = localStorage.getItem('userId');
-  const { data, isLoading } = useGetBoardQuery(boardId!);
-  const [updateTask] = useUpdateTaskMutation();
-  const [updateColumn] = useUpdateColumnMutation();
-  const [columns, setColumns] = useState<Array<IColumn>>([]);
+
   const [open, setOpen] = useState(false);
+  const [columns, setColumns] = useState<Array<IColumn>>([]);
+
+  const { data, isLoading } = useGetBoardQuery(boardId!);
+  const [updateColumn] = useUpdateColumnMutation();
+  const [updateTask] = useUpdateTaskMutation();
 
   useEffect(() => {
     data && setColumns(data.columns);
@@ -105,7 +112,19 @@ function BoardPage(): JSX.Element {
         boardId: boardId!,
         userId: userId!,
       };
-      updateTask({ boardId: boardId!, columnId: startColumn!.id, taskId, body });
+
+      try {
+        updateTask({ boardId: boardId!, columnId: startColumn!.id, taskId, body });
+      } catch (error) {
+        const { statusCode, message } = (error as IServerError).data;
+        toast(
+          <div>
+            {`${statusCode} ${message}`}
+            <br />
+            ¯\_(ツ)_/¯
+          </div>
+        );
+      }
     } else {
       // * Dragging columns ----------------------------------------------------
       const newColumns = Array.from(columns).sort((a, b) => a.order - b.order);
@@ -158,6 +177,7 @@ function BoardPage(): JSX.Element {
               )}
             </Droppable>
           </DragDropContext>
+
           <ModalComponent open={open} setOpen={setOpen}>
             <CreateColumn boardId={boardId!} modalClose={() => setOpen(false)} />
           </ModalComponent>

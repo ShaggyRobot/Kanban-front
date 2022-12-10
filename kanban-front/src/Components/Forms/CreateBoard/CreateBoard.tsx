@@ -1,12 +1,11 @@
 import React from 'react';
 
-import Button from '@mui/material/Button';
-import Paper from '@mui/material/Paper';
-import TextField from '@mui/material/TextField';
-
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useCreateBoardMutation } from '../../../Rtk';
+
+import { Button, Paper, TextField } from '@mui/material';
+
+import { useCreateBoardMutation } from '@Rtk';
 
 import styles from '../form.module.scss';
 

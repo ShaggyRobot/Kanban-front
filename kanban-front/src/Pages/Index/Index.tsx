@@ -5,6 +5,7 @@ function Index(): JSX.Element {
   if (localStorage.getItem('token')) {
     return <Navigate to="/boards" />;
   }
+
   return <Navigate to="/home" />;
 }
 

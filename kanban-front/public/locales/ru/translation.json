@@ -2,6 +2,8 @@
   "language": "Язык",
   "yes": "Да",
   "no": "Нет",
+  "profile": "Профиль",
+  "logout": "Выйти",
   "header": {
     "buttons": {
       "signin": "Войти",
@@ -33,7 +35,8 @@
     "deleteColumn": "Удалить колонку"
   },
   "tasks": {
-    "createTask": "Создать задачу"
+    "createTask": "Создать задачу",
+    "updateTask": "Редактировать задачу"
   },
   "messages": {
     "loginTaken": "Скорее всего этот логин уже занят.",

@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
-
-import { useGetBoardsQuery } from '../../Rtk/Api/boardsApi';
-import { Fab } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import { BoardCard } from './BoardCard/BoardCard';
-
-import styles from './boards-page.module.scss';
-import { CreateBoard } from '../../Components/Forms/CreateBoard/CreateBoard';
-import { ModalComponent } from '../../Components/ModalComponent/ModalComponent';
 import { useTranslation } from 'react-i18next';
 
+import { Fab } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+
+import { CreateBoard, ModalComponent } from '@Components';
+import { BoardCard } from './BoardCard/BoardCard';
+
+import { useGetBoardsQuery } from '@Rtk';
+
+import styles from './boards-page.module.scss';
+
 function BoardsPage() {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const { language } = i18n;
-  const { data, isLoading } = useGetBoardsQuery();
+
   const [open, setOpen] = useState(false);
+  const { data, isLoading } = useGetBoardsQuery();
 
   return (
     <div className={`${styles.boards} page`}>
@@ -26,6 +28,7 @@ function BoardsPage() {
             [...data!]
               .sort((a, b) => a.title.localeCompare(b.title, language, { numeric: true }))
               .map((board) => <BoardCard key={board.id} board={board} />)}
+
           <ModalComponent open={open} setOpen={setOpen}>
             <CreateBoard modalClose={() => setOpen(false)} />
           </ModalComponent>

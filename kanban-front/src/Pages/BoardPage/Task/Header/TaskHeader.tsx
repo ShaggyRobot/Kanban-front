@@ -1,5 +1,4 @@
 import React from 'react';
-import { TaskControls } from '../Controls/TaskControls';
 
 import styles from '../task.module.scss';
 

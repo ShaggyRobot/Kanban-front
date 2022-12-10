@@ -1,9 +1,9 @@
-import { Paper, SvgIcon } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { Paper } from '@mui/material';
+
 import img1 from '../../assets/1.png';
-import img2 from '../../assets/2.png';
 import img3 from '../../assets/3.png';
 import logo from '../../assets/rsslogo_round.svg';
 
@@ -32,14 +32,17 @@ function HomePage() {
             <p>{t('aboutKanban.p2')}</p>
             <p>{t('aboutKanban.p3')}</p>
           </div>
+
           <div className={styles.img_wrapper}>
             <img src={img1} alt="" />
           </div>
         </Paper>
+
         <Paper elevation={5} className={styles.section}>
           <div className={styles.img_wrapper}>
             <img className={styles.logo} src={logo} alt="" />
           </div>
+
           <div className={styles.text_wrapper}>
             <p className={styles.rss_about}>{t('aboutRSS.p1')}</p>
             <p>{t('aboutRSS.p2')}</p>
@@ -48,9 +51,11 @@ function HomePage() {
             <p>{t('aboutRSS.p5')}</p>
           </div>
         </Paper>
+
         <Paper elevation={5} className={styles.section}>
           <div className={styles.text_wrapper}>
             <div className={styles.hi}>{t('hi')}</div>
+
             <div className={styles.contacts}>
               <a href="https://t.me/ChitinousCruciform">
                 <div className={styles.icon}>
@@ -70,33 +75,40 @@ function HomePage() {
                 </div>
               </a>
             </div>
+
             <div className={styles.hi}>{t('tech')}</div>
+
             <div className={styles.tech_list}>
               <a href="https://reactjs.org/">
                 <div className={styles.technology} title="React">
                   <img src={react_logo} alt="React" />
                 </div>
               </a>
+
               <a href="https://redux-toolkit.js.org/">
                 <div className={styles.technology} title="Redux Toolkit">
                   <img src={redux_logo} alt="Redux" />
                 </div>
               </a>
+
               <a href="https://www.typescriptlang.org/">
                 <div className={styles.technology} title="TypeScript">
                   <img src={ts_logo} alt="TypeScript" />
                 </div>
               </a>
+
               <a href="https://eslint.org/">
                 <div className={styles.technology} title="ESLint">
                   <img src={eslint_logo} alt="ESLint" />
                 </div>
               </a>
+
               <a href="https://sass-lang.com/">
                 <div className={styles.technology} title="Sass">
                   <img src={sass_logo} alt="Sass" />
                 </div>
               </a>
+
               <a href="https://github.com/atlassian/react-beautiful-dnd">
                 <div className={styles.technology} title="react-beautiful-dnd">
                   <img src={bdnd_logo} alt="Beautiful drag and drop" />
@@ -104,6 +116,7 @@ function HomePage() {
               </a>
             </div>
           </div>
+
           <div className={styles.img_wrapper}>
             <img src={img3} alt="" />
           </div>

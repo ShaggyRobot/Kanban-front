@@ -1,8 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { authApi } from './Api/authApi';
-import { boardsApi } from './Api/boardsApi';
-import { usersApi } from './Api/usersApi';
+import { authApi, boardsApi, usersApi } from '@Rtk';
 
 const store = configureStore({
   reducer: {

@@ -1,6 +1,7 @@
+import React from 'react';
+
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
-import React from 'react';
 
 function ModalComponent(props: {
   open: boolean;
@@ -41,8 +42,6 @@ function ModalComponent(props: {
 
   const Overlay = styled.div`
     position: fixed;
-    width: 100%;
-    height: 100%;
     display: ${open ? 'flex' : 'none'};
     backdrop-filter: blur(2px) sepia(0.2);
     animation: ${overlayKf} 0.3s;
@@ -51,6 +50,8 @@ function ModalComponent(props: {
     align-items: center;
     top: 0;
     left: 0;
+    bottom: 0;
+    right: 0;
     z-index: 2000;
     overflow-y: auto;
     overflow-x: hidden;

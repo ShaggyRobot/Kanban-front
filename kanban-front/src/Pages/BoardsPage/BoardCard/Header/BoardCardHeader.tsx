@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
-import DeleteForever from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteForever from '@mui/icons-material/DeleteForever';
 
-import { IBoardFaceDTO, useDeleteBoardMutation } from '../../../../Rtk';
+import { ModalComponent, Confirm, EditBoard } from '@Components';
+
+import { IBoardFaceDTO, useDeleteBoardMutation } from '@Rtk';
 
 import styles from './board-card-header.module.scss';
-import { ModalComponent } from '../../../../Components/ModalComponent/ModalComponent';
-import { EditBoard } from '../../../../Components/Forms/EditBoard/EditBoard';
-import { Confirm } from '../../../../Components/Confirm/Confirm';
-import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
 
 function BoardCardHeader(props: { board: IBoardFaceDTO }): JSX.Element {
   const { title, id: boardId } = props.board;
@@ -18,9 +17,10 @@ function BoardCardHeader(props: { board: IBoardFaceDTO }): JSX.Element {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  const [deleteBoard] = useDeleteBoardMutation();
   const [open, setOpen] = useState(false);
   const [confirm, setConfirm] = useState(false);
+
+  const [deleteBoard] = useDeleteBoardMutation();
 
   const openDeleteConfirm = (e: React.MouseEvent) => {
     e.stopPropagation();

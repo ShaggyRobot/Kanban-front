@@ -1,16 +1,15 @@
+import React from 'react';
+import { Draggable } from 'react-beautiful-dnd';
+
 import { Divider, Paper } from '@mui/material';
-import React, { useState } from 'react';
 
-import DeleteForever from '@mui/icons-material/DeleteForever';
-import EditIcon from '@mui/icons-material/Edit';
+import { animateStyles } from '../utils/animateStyles';
+import { TaskHeader } from './Header/TaskHeader';
+import { TaskControls } from './Controls/TaskControls';
 
-import { ITask } from '../../../Rtk/Api/types';
+import { ITask } from '@Rtk';
 
 import styles from './task.module.scss';
-import { TaskHeader } from './Header/TaskHeader';
-import { Draggable } from 'react-beautiful-dnd';
-import { animateStyles } from '../utils/animateStyles';
-import { TaskControls } from './Controls/TaskControls';
 
 function Task(props: {
   task: ITask;
@@ -37,7 +36,9 @@ function Task(props: {
                 columnId={columnId}
                 boardId={boardId}
               />
+
               <Divider></Divider>
+
               <div className={styles.task__description}>{task.description}</div>
             </Paper>
             <TaskControls task={task} columnId={columnId} boardId={boardId} />

@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import LanguageIcon from '@mui/icons-material/Language';
-
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import LanguageIcon from '@mui/icons-material/Language';
 
 function LangControl(): JSX.Element {
   const [lang, setLang] = useState(localStorage.getItem('i18nextLng') || '');
@@ -19,6 +18,7 @@ function LangControl(): JSX.Element {
       <InputLabel id="lang-select">
         <LanguageIcon />
       </InputLabel>
+
       <Select
         labelId="lang-select"
         id="lang-select"

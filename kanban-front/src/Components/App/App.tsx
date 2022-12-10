@@ -1,19 +1,26 @@
 import React from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-
-import { ProtectedRoute } from './ProtectedRoute';
-import { BoardPage, BoardsPage, HomePage, SignUpPage, SignInPage } from '../../Pages';
-
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
-import Layout from './Layout';
+import { Layout } from './Layout';
+import { ProtectedRoute } from './ProtectedRoute';
+
+import {
+  BoardPage,
+  BoardsPage,
+  HomePage,
+  SignUpPage,
+  SignInPage,
+  Index,
+  EditProfilePage,
+} from '@Pages';
+
 import './App.scss';
-import { EditProfilePage } from '../../Pages/EditProfilePage/EditProfilePage';
-import { Index } from '../../Pages/Index/Index';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const { pathname } = useLocation();
+
   return (
     <div className={pathname === '/home' ? 'app-home' : 'app'}>
       <Routes>
@@ -32,4 +39,4 @@ function App() {
   );
 }
 
-export default App;
+export { App };
