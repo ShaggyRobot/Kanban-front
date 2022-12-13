@@ -1,0 +1,32 @@
+.board {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow: auto;
+  width: 100%;
+
+  &__title{
+    font-size: 1.6rem;
+    text-align: center;
+  }
+
+  &__columns_list{
+    display: flex;
+    flex-grow: 1;
+    padding: .25rem;
+    width: 100%;
+    height: max-content;
+    flex-direction: row;
+    overflow: auto;
+  }
+}
+
+.create{
+  height: 112px;
+  min-width: 64px;
+  width: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
