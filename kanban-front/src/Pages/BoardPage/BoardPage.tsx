@@ -36,7 +36,7 @@ function BoardPage(): JSX.Element {
     data && setColumns(data.columns);
   }, [data]);
 
-  const onDragEnd = (res: DropResult) => {
+  const onDragEnd = async (res: DropResult) => {
     if (!res.destination) return;
 
     if (
@@ -50,8 +50,8 @@ function BoardPage(): JSX.Element {
       const endColumn = columns.find((column) => column.id === res.destination!.droppableId);
       const draggedTask = startColumn?.tasks.find((task) => task.id === res.draggableId);
 
-      // * Same column ---------------------------------------------------------
       if (startColumn?.id === endColumn?.id) {
+        // * Same column ---------------------------------------------------------
         const newTasks = Array.from(startColumn!.tasks).sort((a, b) => a.order - b.order); // !!!
         const [dt] = newTasks.splice(res.source.index, 1);
         newTasks.splice(res.destination.index, 0, dt);
@@ -114,18 +114,27 @@ function BoardPage(): JSX.Element {
       };
 
       try {
-        updateTask({ boardId: boardId!, columnId: startColumn!.id, taskId, body });
+        await updateTask({
+          boardId: boardId!,
+          columnId: startColumn!.id,
+          taskId: taskId,
+          body,
+        }).unwrap();
       } catch (error) {
         const { statusCode, message } = (error as IServerError).data;
+
         toast(
           <div>
             {`${statusCode} ${message}`}
             <br />
             ¯\_(ツ)_/¯
-          </div>
+          </div>,
+          { autoClose: 2000 }
         );
       }
-    } else {
+    }
+
+    if (res.type === 'column') {
       // * Dragging columns ----------------------------------------------------
       const newColumns = Array.from(columns).sort((a, b) => a.order - b.order);
 

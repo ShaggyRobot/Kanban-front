@@ -138,8 +138,12 @@ const boardsApi = createApi({
         };
       },
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        await queryFulfilled;
-        dispatch(boardsApi.util.invalidateTags(['board']));
+        try {
+          await queryFulfilled;
+          dispatch(boardsApi.util.invalidateTags(['board']));
+        } catch (error) {
+          return;
+        }
       },
     }),
 
