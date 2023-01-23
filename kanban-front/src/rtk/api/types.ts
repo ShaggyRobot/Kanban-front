@@ -24,14 +24,20 @@ interface ICreateBoardBody {
   description: string;
 }
 
+interface IUpdateBoardBody extends ICreateBoardBody {
+  sharedWith: Array<string>;
+}
+
 interface ICreateTaskBody extends ICreateBoardBody {
   userId: string;
 }
 
 interface IBoardFaceDTO {
+  userId: string;
   id: string;
   title: string;
   description: string;
+  sharedWith: Array<ISharedUser>;
 }
 
 interface IFile {
@@ -67,10 +73,12 @@ interface IColumn {
 type IColumnUpdate = Omit<IColumn, 'tasks'>;
 
 interface IBoardDTO extends IBoardFaceDTO {
-  id: string;
-  title: string;
-  description: string;
   columns: Array<IColumn>;
+}
+
+interface ISharedUser {
+  id: string;
+  login: string;
 }
 
 interface IServerError {
@@ -87,6 +95,7 @@ export type {
   ISignInResponse,
   ISignUpResponse,
   ICreateBoardBody,
+  IUpdateBoardBody,
   IBoardFaceDTO,
   IFile,
   ITask,

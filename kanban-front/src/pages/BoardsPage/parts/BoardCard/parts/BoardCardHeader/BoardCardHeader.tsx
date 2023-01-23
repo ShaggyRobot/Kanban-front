@@ -12,7 +12,8 @@ import { IBoardFaceDTO, useDeleteBoardMutation } from '@Rtk';
 import styles from './board-card-header.module.scss';
 
 function BoardCardHeader(props: { board: IBoardFaceDTO }): JSX.Element {
-  const { title, id: boardId } = props.board;
+  const userId = localStorage.getItem('userId') || '';
+  const { title, id: boardId, userId: ownerId } = props.board;
 
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -21,6 +22,8 @@ function BoardCardHeader(props: { board: IBoardFaceDTO }): JSX.Element {
   const [confirm, setConfirm] = useState(false);
 
   const [deleteBoard] = useDeleteBoardMutation();
+
+  const isOwner = (): boolean => userId === ownerId || !ownerId;
 
   const openDeleteConfirm = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -47,15 +50,18 @@ function BoardCardHeader(props: { board: IBoardFaceDTO }): JSX.Element {
       >
         {title}
       </div>
-      <div className={styles.header__controls}>
-        <div className={styles.edit}>
-          <EditIcon color="success" onClick={(e) => editBoardHandler(e)} />
-        </div>
 
-        <div className={styles.delete}>
-          <DeleteForever color="error" onClick={(e) => openDeleteConfirm(e)} />
+      {isOwner() && (
+        <div className={styles.header__controls}>
+          <div className={styles.edit}>
+            <EditIcon color="success" onClick={(e) => editBoardHandler(e)} />
+          </div>
+
+          <div className={styles.delete}>
+            <DeleteForever color="error" onClick={(e) => openDeleteConfirm(e)} />
+          </div>
         </div>
-      </div>
+      )}
 
       <ModalComponent open={open} setOpen={setOpen}>
         <EditBoard board={props.board} closeModal={() => setOpen(false)} />

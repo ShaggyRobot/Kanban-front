@@ -1,5 +1,8 @@
 import React from 'react';
+
+import { useDispatch } from 'react-redux';
 import { useNavigate, NavLink } from 'react-router-dom';
+
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -8,7 +11,7 @@ import jwtDecode from 'jwt-decode';
 
 import { Button, Divider, Link, Paper, TextField } from '@mui/material';
 
-import { IServerError, useSignInMutation } from '@Rtk';
+import { boardsApi, IServerError, useSignInMutation } from '@Rtk';
 
 import styles from '../form.module.scss';
 
@@ -20,7 +23,10 @@ interface IFormValues {
 
 function SignIn() {
   const { t } = useTranslation();
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [handleSignIn] = useSignInMutation();
 
   const {
@@ -51,7 +57,7 @@ function SignIn() {
         isLoading: false,
         autoClose: 1000,
       });
-
+      dispatch(boardsApi.util.invalidateTags(['boards']));
       navigate('/boards');
     } catch (error) {
       const { statusCode } = (error as IServerError).data;

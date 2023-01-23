@@ -7,6 +7,7 @@ import {
   ICreateTaskBody,
   ITaskUpdate,
   IColumnUpdate,
+  IUpdateBoardBody,
 } from '@Rtk';
 
 import { endpoints } from '@Endpoints';
@@ -36,6 +37,14 @@ const boardsApi = createApi({
       providesTags: ['boards'],
     }),
 
+    getBoard: builder.query<IBoardDTO, string>({
+      query: (id: string) => ({
+        url: `/${id}`,
+        method: 'GET',
+      }),
+      providesTags: ['board'],
+    }),
+
     createBoard: builder.mutation<IBoardFaceDTO, ICreateBoardBody>({
       query: (body) => ({
         url: '',
@@ -45,7 +54,7 @@ const boardsApi = createApi({
       invalidatesTags: ['boards'],
     }),
 
-    updateBoard: builder.mutation<IBoardFaceDTO, { boardId: string; body: ICreateBoardBody }>({
+    updateBoard: builder.mutation<IBoardFaceDTO, { boardId: string; body: IUpdateBoardBody }>({
       query: (arg) => {
         const { boardId, body } = arg;
         return {
@@ -54,7 +63,7 @@ const boardsApi = createApi({
           body,
         };
       },
-      invalidatesTags: ['boards'],
+      invalidatesTags: ['board', 'boards'],
     }),
 
     deleteBoard: builder.mutation<void, string>({
@@ -63,14 +72,6 @@ const boardsApi = createApi({
         method: 'DELETE',
       }),
       invalidatesTags: ['boards'],
-    }),
-
-    getBoard: builder.query<IBoardDTO, string>({
-      query: (id: string) => ({
-        url: `/${id}`,
-        method: 'GET',
-      }),
-      providesTags: ['board'],
     }),
 
     createColumn: builder.mutation<IColumn, { boardId: string; title: string }>({

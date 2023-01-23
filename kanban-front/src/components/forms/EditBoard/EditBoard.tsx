@@ -15,7 +15,9 @@ interface IFormValues {
 
 function EditBoard(props: { board: IBoardFaceDTO; closeModal: () => void }): JSX.Element {
   const { board, closeModal } = props;
+
   const { t } = useTranslation();
+
   const [updateBoard] = useUpdateBoardMutation();
 
   const {
@@ -26,7 +28,7 @@ function EditBoard(props: { board: IBoardFaceDTO; closeModal: () => void }): JSX
   } = useForm<IFormValues>({ mode: 'onSubmit' });
 
   const updateBoardHandler = async (values: IFormValues) => {
-    updateBoard({ boardId: board.id, body: values });
+    updateBoard({ boardId: board.id, body: { ...values, sharedWith: ['asd', 'zxc'] } });
     reset();
     closeModal();
   };
@@ -34,6 +36,7 @@ function EditBoard(props: { board: IBoardFaceDTO; closeModal: () => void }): JSX
   return (
     <Paper elevation={2} className={styles.form__container}>
       <h3>{t('boards.editBoard')}</h3>
+
       <form id="updateBoard" className={styles.form} onSubmit={handleSubmit(updateBoardHandler)}>
         <TextField
           multiline
@@ -44,7 +47,8 @@ function EditBoard(props: { board: IBoardFaceDTO; closeModal: () => void }): JSX
           defaultValue={board.title}
           {...register('title', { required: 'true' })}
           error={!!errors.title}
-        ></TextField>
+        />
+
         <TextField
           multiline
           rows={8}
@@ -54,7 +58,8 @@ function EditBoard(props: { board: IBoardFaceDTO; closeModal: () => void }): JSX
           defaultValue={board.description}
           {...register('description', { required: 'true' })}
           error={!!errors.description}
-        ></TextField>
+        />
+
         <Button variant="outlined" size="small" type="submit">
           {t('form.submit')}
         </Button>

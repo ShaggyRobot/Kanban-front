@@ -16,7 +16,9 @@ interface IFormValues {
 
 function CreateBoard(props: { modalClose: () => void }): JSX.Element {
   const { modalClose } = props;
+
   const { t } = useTranslation();
+
   const [createBoard] = useCreateBoardMutation();
 
   const {
@@ -27,7 +29,11 @@ function CreateBoard(props: { modalClose: () => void }): JSX.Element {
   } = useForm<IFormValues>({ mode: 'onSubmit' });
 
   const boardCreate = async (values: IFormValues) => {
-    await createBoard(values).unwrap();
+    const formVals = values;
+
+    const dto = { ...formVals, sharedWith: '[]' };
+
+    await createBoard(dto).unwrap();
     modalClose();
     reset();
   };
@@ -48,7 +54,7 @@ function CreateBoard(props: { modalClose: () => void }): JSX.Element {
           error={!!errors.title}
           autoComplete="off"
           {...register('title', { required: 'true' })}
-        ></TextField>
+        />
 
         <TextField
           multiline
@@ -56,7 +62,8 @@ function CreateBoard(props: { modalClose: () => void }): JSX.Element {
           className={styles.form__txt_area}
           label={`${t('boards.description')}`}
           {...register('description', { required: 'true' })}
-        ></TextField>
+        />
+
         <Button variant="outlined" size="small" type="submit">
           {t('boards.create')}
         </Button>

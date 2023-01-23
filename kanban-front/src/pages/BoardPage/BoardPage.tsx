@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { toast } from 'react-toastify';
 
-import { Fab } from '@mui/material';
+import { Button, Drawer, Fab } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import CoPresentIcon from '@mui/icons-material/CoPresent';
 
 import { CreateColumn, ModalComponent } from '@Components';
+
 import { Column } from './parts/Column/Column';
+import { Shared } from './parts/Shared/Shared';
 
 import {
   useGetBoardQuery,
@@ -26,13 +29,17 @@ function BoardPage(): JSX.Element {
   const userId = localStorage.getItem('userId');
 
   const [open, setOpen] = useState(false);
-  const [columns, setColumns] = useState<Array<IColumn>>([]);
-
   const { data, isLoading } = useGetBoardQuery(boardId!);
+  const [columns, setColumns] = useState<Array<IColumn>>([]);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
   const [updateColumn] = useUpdateColumnMutation();
   const [updateTask] = useUpdateTaskMutation();
 
+  const drawerContainer = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
+    console.log(data);
     data && setColumns(data.columns);
   }, [data]);
 
@@ -151,15 +158,32 @@ function BoardPage(): JSX.Element {
     }
   };
 
+  const handleShared = () => {
+    console.log(data?.sharedWith);
+    setDrawerOpen(!drawerOpen);
+  };
+
   return (
-    <div className={`${styles.board}`}>
+    <div className={`${styles.board}`} ref={drawerContainer} style={{ position: 'relative' }}>
       {isLoading ? (
         <h1 className="float" style={{ margin: 'auto' }}>
           Loading...
         </h1>
       ) : (
         <>
-          <div className={styles.board__title}>{data?.title}</div>
+          <div className={styles.board__title}>
+            <div className={styles.board__title_text}>{data?.title}</div>
+
+            <Button
+              variant="outlined"
+              size="small"
+              className={styles.board__title_icon}
+              onClick={handleShared}
+            >
+              <CoPresentIcon />
+            </Button>
+          </div>
+
           <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId="all-columns" direction="horizontal" type="column">
               {(provided) => (
@@ -190,6 +214,38 @@ function BoardPage(): JSX.Element {
           <ModalComponent open={open} setOpen={setOpen}>
             <CreateColumn boardId={boardId!} modalClose={() => setOpen(false)} />
           </ModalComponent>
+
+          <Drawer
+            anchor="right"
+            variant="persistent"
+            open={drawerOpen}
+            BackdropProps={{
+              style: {
+                backdropFilter: 'blur(3px)',
+              },
+            }}
+            PaperProps={{
+              style: {
+                position: 'absolute',
+                top: 'auto',
+                bottom: '0',
+                margin: '1rem 0',
+                height: 'calc(100% - 4rem)',
+                padding: '1rem',
+                borderRadius: '4px 0 0 4px',
+                boxShadow:
+                  '0px 8px 10px -5px rgb(0 0 0 / 20%), 0px 16px 24px 2px rgb(0 0 0 / 14%), 0px 6px 30px 5px rgb(0 0 0 / 12%)',
+              },
+            }}
+            ModalProps={{
+              container: drawerContainer.current,
+              style: {
+                position: 'absolute',
+              },
+            }}
+          >
+            <Shared board={data} />
+          </Drawer>
         </>
       )}
     </div>
