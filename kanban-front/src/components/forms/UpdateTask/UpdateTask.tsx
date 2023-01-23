@@ -60,7 +60,7 @@ function UpdateTask(props: {
         <TextField
           size="small"
           type="text"
-          label="Title"
+          label={t('tasks.title')}
           error={!!errors.title}
           defaultValue={task.title}
           {...register('title', { required: 'true' })}
@@ -71,7 +71,7 @@ function UpdateTask(props: {
           type="text"
           multiline
           rows={8}
-          label="Description"
+          label={t('tasks.description')}
           defaultValue={task.description}
           error={!!errors.description}
           {...register('description', { required: 'true' })}

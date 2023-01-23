@@ -12,6 +12,7 @@ import { ModalComponent, Confirm, UpdateTask } from '@Components';
 import { ITask, useDeleteTaskMutation } from '@Rtk';
 
 import styles from '../../task.module.scss';
+import { t } from 'i18next';
 
 function TaskControls(props: { task: ITask; columnId: string; boardId: string }): JSX.Element {
   const { boardId, columnId, task } = props;
@@ -49,6 +50,7 @@ function TaskControls(props: { task: ITask; columnId: string; boardId: string })
       <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
         {isDeleting || isUpdating ? <CircularProgress size={24} /> : <MoreVertIcon />}
       </IconButton>
+
       <Menu
         className={styles.task__controls__menu}
         id="title-menu"
@@ -80,7 +82,7 @@ function TaskControls(props: { task: ITask; columnId: string; boardId: string })
 
       <ModalComponent open={confirm} setOpen={setConfirm}>
         <Confirm
-          message="Delete task"
+          message={`${t('tasks.delete')}?`}
           action={deleteTaskHandler}
           cancelAction={handleConfirmNegative}
         />

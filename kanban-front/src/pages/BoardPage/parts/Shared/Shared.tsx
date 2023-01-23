@@ -7,6 +7,7 @@ import PersonOffIcon from '@mui/icons-material/PersonOff';
 import { IBoardDTO, IBoardFaceDTO, useGetUserQuery, useUpdateBoardMutation } from '@Rtk';
 
 import styles from './shared.module.scss';
+import { useTranslation } from 'react-i18next';
 
 interface IProps {
   board?: IBoardDTO;
@@ -14,6 +15,8 @@ interface IProps {
 
 function Shared(props: IProps): JSX.Element {
   const { board } = props;
+
+  const { t } = useTranslation();
 
   const currentUserId = localStorage.getItem('userId') || '';
 
@@ -24,7 +27,7 @@ function Shared(props: IProps): JSX.Element {
 
   const { data: boardOwner } = useGetUserQuery({ id: board!.userId });
 
-  const boardOwnerLogin = boardOwner?.id === currentUserId ? 'You' : boardOwner?.login;
+  const boardOwnerLogin = boardOwner?.id === currentUserId ? t('boards.you') : boardOwner?.login;
 
   useEffect(() => {
     board && setShared(board.sharedWith.map((user) => user.login));
@@ -68,12 +71,14 @@ function Shared(props: IProps): JSX.Element {
       <div className={styles.shared}>
         <div className={styles.shared__title}>
           {boardOwner && (
-            <div className={styles.shared__owner}>Board owner is {boardOwnerLogin}</div>
+            <div className={styles.shared__owner}>
+              {t('boards.boardOwner')} {boardOwnerLogin}
+            </div>
           )}
 
           <Divider />
 
-          <div className={styles.shared__subtitle}>Shared with:</div>
+          <div className={styles.shared__subtitle}>{t('boards.shared')}</div>
         </div>
 
         {shared.map((user, idx) => (
@@ -88,7 +93,7 @@ function Shared(props: IProps): JSX.Element {
         <div className={styles.shared__user_add}>
           <TextField
             size="small"
-            label="Add User"
+            label={t('boards.addUser')}
             value={input}
             onChange={(e) => handleChange(e)}
             fullWidth
@@ -101,7 +106,7 @@ function Shared(props: IProps): JSX.Element {
       </div>
 
       <Button variant="contained" size="small" onClick={handleSubmit}>
-        submit
+        {t('form.submit')}
       </Button>
     </>
   );

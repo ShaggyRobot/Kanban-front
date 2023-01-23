@@ -8,7 +8,8 @@
     "buttons": {
       "signin": "sign in",
       "signup": "sign up"
-    }
+    },
+    "toMain": "Go to main"
   },
   "form": {
     "login": "Login",
@@ -28,11 +29,18 @@
     "create": "Create",
     "createBoard": "Create Board",
     "editBoard": "Edit board",
-    "deleteBoard": "Delete board"
+    "deleteBoard": "Delete board",
+    "boardOwner": "Board owner is:",
+    "you": "You",
+    "shared": "Board is shared with:",
+    "addUser": "Add user"
   },
   "tasks": {
     "createTask": "Create task",
-    "updateTask": "Update task"
+    "updateTask": "Update task",
+    "title": "Task title",
+    "description": "Task description",
+    "delete": "Delete task"
   },
   "columns": {
     "createColumn": "Create column",
