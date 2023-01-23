@@ -39,7 +39,6 @@ function BoardPage(): JSX.Element {
   const drawerContainer = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    console.log(data);
     data && setColumns(data.columns);
   }, [data]);
 
@@ -59,7 +58,7 @@ function BoardPage(): JSX.Element {
 
       if (startColumn?.id === endColumn?.id) {
         // * Same column ---------------------------------------------------------
-        const newTasks = Array.from(startColumn!.tasks).sort((a, b) => a.order - b.order); // !!!
+        const newTasks = Array.from(startColumn!.tasks).sort((a, b) => a.order - b.order);
         const [dt] = newTasks.splice(res.source.index, 1);
         newTasks.splice(res.destination.index, 0, dt);
 
@@ -159,7 +158,6 @@ function BoardPage(): JSX.Element {
   };
 
   const handleShared = () => {
-    console.log(data?.sharedWith);
     setDrawerOpen(!drawerOpen);
   };
 

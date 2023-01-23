@@ -47,8 +47,6 @@ function Shared(props: IProps): JSX.Element {
   };
 
   const handleSubmit = async (): Promise<void> => {
-    console.log(board);
-
     try {
       const res = (await updateBoard({
         boardId: board!.id,
